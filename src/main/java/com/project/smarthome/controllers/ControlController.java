@@ -29,7 +29,7 @@ public class ControlController {
 		ModelAndView modelAndView = new ModelAndView("control.jsp");
 		
 		try {
-			mqttClient.publishMessage("home/lights/kitchen", "1");
+			mqttClient.publishMessage("home/lights/kitchen", "0");
 		} catch (MqttException e) {
 			e.printStackTrace();
 		}
