@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.project.smarthome.mqtt.MQTTCallback;
 import com.project.smarthome.mqtt.MQTTClient;
 
 @Controller
@@ -14,6 +15,9 @@ public class ControlController {
 
 	@Autowired
 	private MQTTClient mqttClient;
+	
+	@Autowired
+	private MQTTCallback mqttCallback;
 	
 	@RequestMapping("control")
 	public ModelAndView home() {
@@ -23,13 +27,21 @@ public class ControlController {
 		return modelAndView;
 	}
 	
-	@RequestMapping("lightsKitchen")
-	public ModelAndView kitchen() {
-		
+	@RequestMapping("{room}")
+	public ModelAndView livingroom(@PathVariable("room") String room) {
+	
 		ModelAndView modelAndView = new ModelAndView("control.jsp");
 		
 		try {
-			mqttClient.publishMessage("home/lights/kitchen", "0");
+			if(mqttCallback.getAnyStatus(room) == 0) {
+				mqttClient.publishMessage("home/" + room + "/lights", "1");
+			}
+			
+			if(mqttCallback.getAnyStatus(room) == 1) {
+				mqttClient.publishMessage("home/" + room + "/lights", "0");
+					
+			}
+
 		} catch (MqttException e) {
 			e.printStackTrace();
 		}

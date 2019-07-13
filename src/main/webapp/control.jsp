@@ -14,13 +14,10 @@
 	
 	<table align="center" width="400" height="100">
 		<tr>
-		
+
+			<td>Living room</td>
 			<td>
-				Kitchen
-			</td>
-			
-			<td>
-				<form action="lightsKitchen">
+				<form action="livingroom">
 					<input type="submit" value="ON/OFF">
 				</form>
 			</td>
@@ -32,14 +29,22 @@
 		</tr>
 		
 		<tr>
-			<td>Living room</td>
-			<td><button type="button">ON/OFF</button></td>
+			<td>Kitchen</td>
+			<td>
+				<form action="kitchen">
+					<input type="submit" value="ON/OFF">
+				</form>
+			</td>
 			<td><b>O</b></td>
 		</tr>
 		
 		<tr>
 			<td>Outside</td>
-			<td><button type="button">ON/OFF</button></td>
+			<td>
+				<form action="outside">
+					<input type="submit" value="ON/OFF">
+				</form>
+			</td>
 			<td><b>O</b></td>
 		</tr>
 	</table>

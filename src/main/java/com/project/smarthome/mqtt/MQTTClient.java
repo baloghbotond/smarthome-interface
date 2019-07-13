@@ -30,9 +30,11 @@ public class MQTTClient {
 		
 		mqttClient.setCallback(mqttCallback);
 		mqttClient.connect();
+		
+		subscribeToTheTopic("home/livingroom/lights/status");
+		publishMessage("home/livingroom/lights/check", "1");
 			
 		System.out.println("The connection has been established.");
-		
 	}
 	
 	public void publishMessage(String topic, String message) throws MqttException {

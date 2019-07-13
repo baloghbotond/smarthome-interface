@@ -23,8 +23,6 @@ public class SmarthomeApplication {
 		
 		try {
 			mqttClient.establishMqttConnection();
-			mqttClient.subscribeToTheTopic("home/rpi");
-			mqttClient.publishMessage("home/desktop", "hello");
 			
 		} catch (MqttException ex) {
 			ex.printStackTrace();
