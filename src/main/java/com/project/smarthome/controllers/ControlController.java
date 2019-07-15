@@ -7,40 +7,46 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.project.smarthome.mqtt.MQTTCallback;
+import com.project.smarthome.helpers.StatusFields;
+import com.project.smarthome.helpers.StatusHelper;
 import com.project.smarthome.mqtt.MQTTClient;
 
 @Controller
+@RequestMapping(path = "control")
 public class ControlController {
 
 	@Autowired
 	private MQTTClient mqttClient;
 	
 	@Autowired
-	private MQTTCallback mqttCallback;
+	private StatusFields statusFields;
 	
-	@RequestMapping("control")
+	@Autowired
+	private StatusHelper statusHelper;
+	
+	@RequestMapping("/home")
 	public ModelAndView home() {
-		
+		System.out.println(mqttClient.isConnected());
 		ModelAndView modelAndView = new ModelAndView("control.jsp");
 		
 		return modelAndView;
 	}
 	
-	@RequestMapping("{room}")
-	public ModelAndView livingroom(@PathVariable("room") String room) {
-	
+	@RequestMapping("/{room}")
+	public ModelAndView lights(@PathVariable("room") String room) {
+		System.out.println(mqttClient.isConnected());
 		ModelAndView modelAndView = new ModelAndView("control.jsp");
 		
-		try {
-			if(mqttCallback.getAnyStatus(room) == 0) {
+		try {	
+			if(statusFields.getLightStatus(room) == 0) {
 				mqttClient.publishMessage("home/" + room + "/lights", "1");
 			}
 			
-			if(mqttCallback.getAnyStatus(room) == 1) {
-				mqttClient.publishMessage("home/" + room + "/lights", "0");
-					
+			if(statusFields.getLightStatus(room) == 1) {
+				mqttClient.publishMessage("home/" + room + "/lights", "0");		
 			}
+			
+			statusHelper.waitForLightStatus(room);
 
 		} catch (MqttException e) {
 			e.printStackTrace();

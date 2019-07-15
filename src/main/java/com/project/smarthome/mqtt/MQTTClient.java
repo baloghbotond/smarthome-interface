@@ -29,16 +29,22 @@ public class MQTTClient {
 		connectionOptions.setCleanSession(true);
 		
 		mqttClient.setCallback(mqttCallback);
-		mqttClient.connect();
+		while(!mqttClient.isConnected()) {
+			mqttClient.connect();
+		}	
 		
 		subscribeToTheTopic("home/livingroom/lights/status");
+		subscribeToTheTopic("home/livingroom/mcu/ts/value");
+		subscribeToTheTopic("home/livingroom/mcu/status");
 		publishMessage("home/livingroom/lights/check", "1");
+		publishMessage("home/livingroom/mcu/ts/check", "1");
+		publishMessage("home/livingroom/mcu/check", "1");
 			
 		System.out.println("The connection has been established.");
 	}
 	
 	public void publishMessage(String topic, String message) throws MqttException {
-		
+		System.out.println(mqttClient.isConnected());
 		byte[] payload = message.getBytes();
 		MqttMessage mqttMessage = new MqttMessage(payload);
 		
@@ -49,5 +55,9 @@ public class MQTTClient {
 		
 		mqttClient.subscribe(topic);
 		
+	}
+	
+	public boolean isConnected() {
+		return mqttClient.isConnected();
 	}
 }

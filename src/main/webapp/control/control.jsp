@@ -1,3 +1,4 @@
+<%@page import="com.project.smarthome.helpers.StatusHelper"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -14,18 +15,13 @@
 	
 	<table align="center" width="400" height="100">
 		<tr>
-
 			<td>Living room</td>
 			<td>
 				<form action="livingroom">
 					<input type="submit" value="ON/OFF">
 				</form>
 			</td>
-			
-			<td>
-				<b>O</b>
-			</td>
-			
+			<td><b><%=StatusHelper.displayLightStatus("livingroom")%></b></td>
 		</tr>
 		
 		<tr>
@@ -35,7 +31,7 @@
 					<input type="submit" value="ON/OFF">
 				</form>
 			</td>
-			<td><b>O</b></td>
+			<td><b><%=StatusHelper.displayLightStatus("kitchen")%></b></td>
 		</tr>
 		
 		<tr>
@@ -45,7 +41,7 @@
 					<input type="submit" value="ON/OFF">
 				</form>
 			</td>
-			<td><b>O</b></td>
+			<td><b><%=StatusHelper.displayLightStatus("outside")%></b></td>
 		</tr>
 	</table>
 	
@@ -54,9 +50,14 @@
 	<table align="center" width="200" height="100">
 		<tr>
 			<td>ALL OFF</td>
-			<td><button type="button">OFF</button></td>
+			<td>
+				<form action="everywhere">
+					<input type="submit" value="OFF">
+				</form>
+			</td>
 		</tr>
 	</table>
 	
+	<%@ include file="control-footer.html" %>
 </body>
 </html>
