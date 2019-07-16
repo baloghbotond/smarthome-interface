@@ -9,6 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.project.smarthome.helpers.StatusFields;
 import com.project.smarthome.helpers.StatusHelper;
+import com.project.smarthome.mqtt.MQTTCallback;
 import com.project.smarthome.mqtt.MQTTClient;
 
 @Controller
@@ -34,7 +35,7 @@ public class ControlController {
 	
 	@RequestMapping("/{room}")
 	public ModelAndView lights(@PathVariable("room") String room) {
-		System.out.println(mqttClient.isConnected());
+		
 		ModelAndView modelAndView = new ModelAndView("control.jsp");
 		
 		try {	

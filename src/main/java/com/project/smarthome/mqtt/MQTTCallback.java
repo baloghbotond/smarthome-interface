@@ -87,5 +87,6 @@ public class MQTTCallback implements MqttCallback{
 
 	@Override
 	public void deliveryComplete(IMqttDeliveryToken token) {
+		
 	}
 }

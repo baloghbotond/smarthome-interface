@@ -21,40 +21,45 @@ public class MQTTClient {
 	private MQTTCallback mqttCallback;
     
     private MqttClient mqttClient;
+    private MqttConnectOptions connectionOptions;
 	
 	public void establishMqttConnection() throws MqttException {
 		
 		mqttClient = new MqttClient(brokerUrl, clientId);
-		MqttConnectOptions connectionOptions = new MqttConnectOptions();
+		connectionOptions = new MqttConnectOptions();
 		connectionOptions.setCleanSession(true);
+		connectionOptions.setAutomaticReconnect(true);
 		
 		mqttClient.setCallback(mqttCallback);
-		while(!mqttClient.isConnected()) {
-			mqttClient.connect();
-		}	
+		mqttClient.connect();
 		
 		subscribeToTheTopic("home/livingroom/lights/status");
 		subscribeToTheTopic("home/livingroom/mcu/ts/value");
 		subscribeToTheTopic("home/livingroom/mcu/status");
+		subscribeToTheTopic("home/kitchen/lights/status");
+		subscribeToTheTopic("home/kitchen/mcu/ts/value");
+		subscribeToTheTopic("home/kitchen/mcu/status");
 		publishMessage("home/livingroom/lights/check", "1");
 		publishMessage("home/livingroom/mcu/ts/check", "1");
 		publishMessage("home/livingroom/mcu/check", "1");
+		publishMessage("home/kitchen/lights/check", "1");
+		publishMessage("home/kitchen/mcu/ts/check", "1");
+		publishMessage("home/kitchen/mcu/check", "1");
 			
-		System.out.println("The connection has been established.");
+		System.out.println("Connected: " + mqttClient.isConnected());
 	}
 	
 	public void publishMessage(String topic, String message) throws MqttException {
-		System.out.println(mqttClient.isConnected());
+		
 		byte[] payload = message.getBytes();
 		MqttMessage mqttMessage = new MqttMessage(payload);
-		
+
 		mqttClient.publish(topic, mqttMessage);
 	}
 	
 	public void subscribeToTheTopic(String topic) throws MqttException {
 		
 		mqttClient.subscribe(topic);
-		
 	}
 	
 	public boolean isConnected() {

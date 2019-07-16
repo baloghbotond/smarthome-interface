@@ -27,7 +27,7 @@ public class AdminController {
 	
 	@RequestMapping("/home")
 	public ModelAndView home() {
-		System.out.println(mqttClient.isConnected());
+		
 		ModelAndView modelAndView = new ModelAndView("admin.jsp");
 		
 		return modelAndView;
@@ -35,7 +35,7 @@ public class AdminController {
 	
 	@RequestMapping("/sleep_{room}")
 	public ModelAndView mcuStatus(@PathVariable("room") String room) {
-		System.out.println(mqttClient.isConnected());
+
 		ModelAndView modelAndView = new ModelAndView("admin.jsp");
 		
 		try {
@@ -62,6 +62,8 @@ public class AdminController {
 		
 		try {
 			mqttClient.publishMessage("home/" + room + "/mcu/ts/set", newValue);
+			
+			statusHelper.waitForTsValue(room);
 			
 		} catch (MqttException e) {
 			e.printStackTrace();

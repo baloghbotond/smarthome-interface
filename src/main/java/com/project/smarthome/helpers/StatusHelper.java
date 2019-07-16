@@ -3,8 +3,6 @@ package com.project.smarthome.helpers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.project.smarthome.mqtt.MQTTCallback;
-
 @Component
 public class StatusHelper {
 
@@ -54,6 +52,20 @@ public class StatusHelper {
 		int countTimeout = 0;
 		int lastStatus = statusFields.getMcuStatus(room);
 		while(lastStatus == statusFields.getMcuStatus(room)  && countTimeout < 10000) {
+			try {
+				Thread.sleep(1);
+				countTimeout++;
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void waitForTsValue(String room) {
+		
+		int countTimeout = 0;
+		int lastValue = statusFields.getSampleTime(room);
+		while(lastValue == statusFields.getSampleTime(room) && countTimeout < 10000) {
 			try {
 				Thread.sleep(1);
 				countTimeout++;
