@@ -22,6 +22,7 @@
 				</form>
 			</td>
 			<td><b><%=StatusHelper.displayLightStatus("livingroom")%></b></td>
+			<td>Temperature: <%= StatusHelper.displayTemperature("livingroom") %></td>
 		</tr>
 		
 		<tr>
@@ -32,6 +33,7 @@
 				</form>
 			</td>
 			<td><b><%=StatusHelper.displayLightStatus("kitchen")%></b></td>
+			<td>Temperature: <%= StatusHelper.displayTemperature("kitchen") %></td>
 		</tr>
 		
 		<tr>
@@ -42,6 +44,7 @@
 				</form>
 			</td>
 			<td><b><%=StatusHelper.displayLightStatus("outside")%></b></td>
+			<td>Temperature: <%= StatusHelper.displayTemperature("outside") %></td>
 		</tr>
 	</table>
 	

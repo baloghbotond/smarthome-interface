@@ -17,6 +17,50 @@ public class StatusFields {
 	private int kitchenTs;
 	private int outsideTs;
 	
+	private int actualLivingroomTemp;
+	private int actualKitchenTemp;
+	private int actualOutsideTemp;
+	
+	private boolean newLivingroomTempFlag;
+	private boolean newKitchenTempFlag;
+	private boolean newOutsideTempFlag;
+	
+	public boolean isNewLivingroomTempFlag() {
+		return newLivingroomTempFlag;
+	}
+	public void setNewLivingroomTempFlag(boolean newLivingroomTempFlag) {
+		this.newLivingroomTempFlag = newLivingroomTempFlag;
+	}
+	public boolean isNewKitchenTempFlag() {
+		return newKitchenTempFlag;
+	}
+	public void setNewKitchenTempFlag(boolean newKitchenTempFlag) {
+		this.newKitchenTempFlag = newKitchenTempFlag;
+	}
+	public boolean isNewOutsideTempFlag() {
+		return newOutsideTempFlag;
+	}
+	public void setNewOutsideTempFlag(boolean newOutsideTempFlag) {
+		this.newOutsideTempFlag = newOutsideTempFlag;
+	}
+	public int getActualLivingroomTemp() {
+		return actualLivingroomTemp;
+	}
+	public void setActualLivingroomTemp(int actualLivingroomTemp) {
+		this.actualLivingroomTemp = actualLivingroomTemp;
+	}
+	public int getActualKitchenTemp() {
+		return actualKitchenTemp;
+	}
+	public void setActualKitchenTemp(int actualKitchenTemp) {
+		this.actualKitchenTemp = actualKitchenTemp;
+	}
+	public int getActualOutsideTemp() {
+		return actualOutsideTemp;
+	}
+	public void setActualOutsideTemp(int actualOutsideTemp) {
+		this.actualOutsideTemp = actualOutsideTemp;
+	}
 	public int getLivingroomLightStatus() {
 		return livingroomLightStatus;
 	}
@@ -114,6 +158,36 @@ public class StatusFields {
 		
 		else {
 			return outsideTs;
+		}
+	}
+	
+	public boolean getTemperatureFlag(String room) {
+		
+		if(room.equals("livingroom")) {
+			return newLivingroomTempFlag;
+		}
+		
+		else if(room.equals("kitchen")) {
+			return newKitchenTempFlag;
+		}
+		
+		else {
+			return newOutsideTempFlag;
+		}
+	}
+	
+	public int getTemperature(String room) {
+		
+		if(room.equals("livingroom")) {
+			return actualLivingroomTemp;
+		}
+		
+		else if(room.equals("kitchen")) {
+			return actualKitchenTemp;
+		}
+		
+		else {
+			return actualOutsideTemp;
 		}
 	}
 	

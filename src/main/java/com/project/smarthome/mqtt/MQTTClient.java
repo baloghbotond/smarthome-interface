@@ -36,9 +36,11 @@ public class MQTTClient {
 		subscribeToTheTopic("home/livingroom/lights/status");
 		subscribeToTheTopic("home/livingroom/mcu/ts/value");
 		subscribeToTheTopic("home/livingroom/mcu/status");
+		subscribeToTheTopic("home/livingroom/temperature/value");
 		subscribeToTheTopic("home/kitchen/lights/status");
 		subscribeToTheTopic("home/kitchen/mcu/ts/value");
 		subscribeToTheTopic("home/kitchen/mcu/status");
+		subscribeToTheTopic("home/kitchen/temperature/value");
 		publishMessage("home/livingroom/lights/check", "1");
 		publishMessage("home/livingroom/mcu/ts/check", "1");
 		publishMessage("home/livingroom/mcu/check", "1");

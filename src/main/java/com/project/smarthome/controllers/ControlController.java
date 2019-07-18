@@ -27,8 +27,18 @@ public class ControlController {
 	
 	@RequestMapping("/home")
 	public ModelAndView home() {
-		System.out.println(mqttClient.isConnected());
+
 		ModelAndView modelAndView = new ModelAndView("control.jsp");
+		
+		try {
+			mqttClient.publishMessage("home/livingroom/temperature/check", "1");
+			statusHelper.waitForNewTemperature("livingroom");
+			mqttClient.publishMessage("home/kitchen/temperature/check", "1");
+			statusHelper.waitForNewTemperature("kitchen");
+			
+		} catch (MqttException e) {
+			e.printStackTrace();
+		}	
 		
 		return modelAndView;
 	}
@@ -49,12 +59,15 @@ public class ControlController {
 			
 			statusHelper.waitForLightStatus(room);
 
+			mqttClient.publishMessage("home/livingroom/temperature/check", "1");
+			statusHelper.waitForNewTemperature("livingroom");
+			mqttClient.publishMessage("home/kitchen/temperature/check", "1");
+			statusHelper.waitForNewTemperature("kitchen");
+			
 		} catch (MqttException e) {
 			e.printStackTrace();
 		}
 		
 		return modelAndView;
 	}
-
-	
 }

@@ -82,7 +82,21 @@ public class MQTTCallback implements MqttCallback{
 		if(topic.equals("home/outside/mcu/ts/value")) {
 			statusFields.setOutsideTs(Integer.parseInt(message.toString()));
 		}
+		
+		if(topic.equals("home/kitchen/temperature/value")) {
+			statusFields.setActualKitchenTemp(Integer.parseInt(message.toString()));
+			statusFields.setNewKitchenTempFlag(!statusFields.isNewKitchenTempFlag());
+		}
 
+		if(topic.equals("home/livingroom/temperature/value")) {
+			statusFields.setActualLivingroomTemp(Integer.parseInt(message.toString()));
+			statusFields.setNewLivingroomTempFlag(!statusFields.isNewLivingroomTempFlag());
+		}
+		
+		if(topic.equals("home/outside/temperature/value")) {
+			statusFields.setActualOutsideTemp(Integer.parseInt(message.toString()));
+			statusFields.setNewOutsideTempFlag(!statusFields.isNewOutsideTempFlag());
+		}
 	}
 
 	@Override

@@ -33,6 +33,11 @@ public class StatusHelper {
 		return statusFields.getSampleTime(room);
 	}
 	
+	public static int displayTemperature(String room) {
+		
+		return statusFields.getTemperature(room);
+	}
+	
 	public void waitForLightStatus(String room) {
 		
 		int countTimeout = 0;
@@ -66,6 +71,20 @@ public class StatusHelper {
 		int countTimeout = 0;
 		int lastValue = statusFields.getSampleTime(room);
 		while(lastValue == statusFields.getSampleTime(room) && countTimeout < 10000) {
+			try {
+				Thread.sleep(1);
+				countTimeout++;
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void waitForNewTemperature(String room) {
+		
+		int countTimeout = 0;
+		boolean lastStatus = statusFields.getTemperatureFlag(room);
+		while(lastStatus == statusFields.getTemperatureFlag(room) && countTimeout < 10000) {
 			try {
 				Thread.sleep(1);
 				countTimeout++;
