@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<body>
+
+		<div th:fragment="control-footer">
+			<table align="center" width="200" height="100">
+				<tr>
+					<td><a href="/">Home</a></td>
+					<td><a href="/admin/home">Admin</a></td>
+					<td>Rooms</td>
+				</tr>
+			</table>
+		</div>
+		
+		<div th:fragment="admin-footer">
+			<table align="center" width="200" height="100">
+				<tr>
+					<td><a href="/">Home</a></td>
+					<td><a href="/control/home">Control</a></td>
+					<td>Rooms</td>
+				</tr>
+			</table>
+		</div>
+		
+	</body>
+	
+</html>

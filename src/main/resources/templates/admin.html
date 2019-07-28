@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Admin</title>
+</head>
+<body>
+
+	<h1 align="center"><b><u>Admin</u></b></h1>
+	
+	<h3 align="center">Database</h3>
+	
+	<hr>
+	
+	<h3 align="center">Microcontrollers</h3>
+	
+	<table align="center" width="800" height="100">
+		<tr>
+			<td><h4>Living room</h4></td>
+			<td th:text="${livingroomMcuStatus}">status</td>
+			<td>
+				<a href="sleep/livingroom">ON/OFF</a>
+			</td>
+			<td>
+				<form action="ts/livingroom">
+					Sample time: <input type="text" name="newTsValue">
+					<input type="submit" value="Submit">
+				</form>
+			</td>
+			<td>Sample time: <span th:text="${livingroomTs}")>X</span> min.</td>
+		</tr>
+		
+		<tr>
+			<td><h4>Kitchen</h4></td>
+			<td th:text="${kitchenMcuStatus}">status</td>
+			<td>
+				<a href="sleep/kitchen">ON/OFF</a>
+			</td>
+			<td>
+				<form action="ts/kitchen">
+					Sample time: <input type="text" name="newTsValue">
+					<input type="submit" value="Submit">
+				</form>
+			</td>
+			<td>Sample time: <span th:text="${kitchenTs}")>X</span> min.</td>
+		</tr>
+		
+		<tr>
+			<td><h4>Outside</h4></td>
+			<td th:text="${outsideMcuStatus}">status</td>
+			<td>
+				<a href="sleep/outside">ON/OFF</a>
+			</td>
+			<td>
+				<form action="ts/outside">
+					Sample time: <input type="text" name="newTsValue">
+					<input type="submit" value="Submit">
+				</form>
+			</td>
+			<td>Sample time: <span th:text="${outsideTs}")>X</span> min.</td>
+		</tr>
+	</table>
+	
+	<div th:replace="fragments/menu :: admin-footer">Footer goes here.</div>
+	
+</body>
+</html>

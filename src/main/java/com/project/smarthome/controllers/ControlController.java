@@ -1,15 +1,13 @@
 package com.project.smarthome.controllers;
 
-import org.eclipse.paho.client.mqttv3.MqttException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.project.smarthome.helpers.StatusFields;
 import com.project.smarthome.helpers.StatusHelper;
-import com.project.smarthome.mqtt.MQTTCallback;
 import com.project.smarthome.mqtt.MQTTClient;
 
 @Controller
@@ -26,48 +24,55 @@ public class ControlController {
 	private StatusHelper statusHelper;
 	
 	@RequestMapping("/home")
-	public ModelAndView home() {
-
-		ModelAndView modelAndView = new ModelAndView("control.jsp");
+	public String home(Model model) {
 		
-		try {
-			mqttClient.publishMessage("home/livingroom/temperature/check", "1");
-			statusHelper.waitForNewTemperature("livingroom");
-			mqttClient.publishMessage("home/kitchen/temperature/check", "1");
-			statusHelper.waitForNewTemperature("kitchen");
-			
-		} catch (MqttException e) {
-			e.printStackTrace();
-		}	
+		settingTheAttributes(model);
 		
-		return modelAndView;
+		return "control";
 	}
 	
 	@RequestMapping("/{room}")
-	public ModelAndView lights(@PathVariable("room") String room) {
-		
-		ModelAndView modelAndView = new ModelAndView("control.jsp");
-		
-		try {	
-			if(statusFields.getLightStatus(room) == 0) {
-				mqttClient.publishMessage("home/" + room + "/lights", "1");
-			}
+	public String lights(@PathVariable("room") String room, Model model) {
 			
-			if(statusFields.getLightStatus(room) == 1) {
-				mqttClient.publishMessage("home/" + room + "/lights", "0");		
-			}
-			
-			statusHelper.waitForLightStatus(room);
-
-			mqttClient.publishMessage("home/livingroom/temperature/check", "1");
-			statusHelper.waitForNewTemperature("livingroom");
-			mqttClient.publishMessage("home/kitchen/temperature/check", "1");
-			statusHelper.waitForNewTemperature("kitchen");
-			
-		} catch (MqttException e) {
-			e.printStackTrace();
+		if (statusFields.getLightStatus(room) == 0) {
+			mqttClient.publishMessage("home/" + room + "/lights", "1");
 		}
+
+		if (statusFields.getLightStatus(room) == 1) {
+			mqttClient.publishMessage("home/" + room + "/lights", "0");
+		}
+
+		statusHelper.waitForLightStatus(room);
+
+		settingTheAttributes(model);
 		
-		return modelAndView;
+		return "control";
+	}
+	
+	@RequestMapping("allLightsOff")
+	public String everywhereOff(Model model) {
+		
+		mqttClient.publishMessage("home/everywhere/lights", "0");
+		
+		settingTheAttributes(model);
+		
+		return "control";
+	}
+	
+	private Model settingTheAttributes(Model model) {
+		
+		model.addAttribute("livingroomLightStatus", StatusHelper.displayLightStatus("livingroom"));
+		model.addAttribute("kitchenLightStatus", StatusHelper.displayLightStatus("kitchen"));
+		model.addAttribute("outsideLightStatus", StatusHelper.displayLightStatus("outside"));
+		
+		model.addAttribute("livingroomTemperature", StatusHelper.displayTemperature("livingroom"));
+		model.addAttribute("kitchenTemperature", StatusHelper.displayTemperature("kitchen"));
+		model.addAttribute("outsideTemperature", StatusHelper.displayTemperature("outside"));
+		
+		model.addAttribute("livingroomHumidity", StatusHelper.displayHumidity("livingroom"));
+		model.addAttribute("kitchenHumidity", StatusHelper.displayHumidity("kitchen"));
+		model.addAttribute("outsideHumidity", StatusHelper.displayHumidity("outside"));
+		
+		return model;
 	}
 }

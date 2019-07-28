@@ -1,5 +1,10 @@
 package com.project.smarthome.mqtt;
 
+import java.util.ArrayList;
+import java.util.StringTokenizer;
+
+import javax.annotation.PostConstruct;
+
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -17,54 +22,80 @@ public class MQTTClient {
 	@Value("${mqtt.client.id}")
     private String clientId;
 	
+	@Value("${mqtt.rooms}")
+	private String allRooms;
+	
 	@Autowired
 	private MQTTCallback mqttCallback;
     
     private MqttClient mqttClient;
     private MqttConnectOptions connectionOptions;
 	
-	public void establishMqttConnection() throws MqttException {
+    @PostConstruct
+	public void establishMqttConnection() {
 		
-		mqttClient = new MqttClient(brokerUrl, clientId);
-		connectionOptions = new MqttConnectOptions();
-		connectionOptions.setCleanSession(true);
-		connectionOptions.setAutomaticReconnect(true);
-		
-		mqttClient.setCallback(mqttCallback);
-		mqttClient.connect();
-		
-		subscribeToTheTopic("home/livingroom/lights/status");
-		subscribeToTheTopic("home/livingroom/mcu/ts/value");
-		subscribeToTheTopic("home/livingroom/mcu/status");
-		subscribeToTheTopic("home/livingroom/temperature/value");
-		subscribeToTheTopic("home/kitchen/lights/status");
-		subscribeToTheTopic("home/kitchen/mcu/ts/value");
-		subscribeToTheTopic("home/kitchen/mcu/status");
-		subscribeToTheTopic("home/kitchen/temperature/value");
-		publishMessage("home/livingroom/lights/check", "1");
-		publishMessage("home/livingroom/mcu/ts/check", "1");
-		publishMessage("home/livingroom/mcu/check", "1");
-		publishMessage("home/kitchen/lights/check", "1");
-		publishMessage("home/kitchen/mcu/ts/check", "1");
-		publishMessage("home/kitchen/mcu/check", "1");
+    	try {
+			mqttClient = new MqttClient(brokerUrl, clientId);
+			connectionOptions = new MqttConnectOptions();
+			connectionOptions.setCleanSession(true);
+			connectionOptions.setAutomaticReconnect(true);
 			
-		System.out.println("Connected: " + mqttClient.isConnected());
+			mqttClient.setCallback(mqttCallback);
+			mqttClient.connect();
+			
+			System.out.println("Connected: " + mqttClient.isConnected());
+			
+			subAndPubInit();
+			
+    	} catch(MqttException ex) {
+    		System.out.println("The connection cannot be established.");
+    	}
 	}
 	
-	public void publishMessage(String topic, String message) throws MqttException {
+	public void publishMessage(String topic, String message) {
 		
 		byte[] payload = message.getBytes();
 		MqttMessage mqttMessage = new MqttMessage(payload);
 
-		mqttClient.publish(topic, mqttMessage);
+		try {
+			mqttClient.publish(topic, mqttMessage);
+		} catch (MqttException e) {
+			System.out.println("The message cannot be published in topic: " + topic);
+		}
 	}
 	
-	public void subscribeToTheTopic(String topic) throws MqttException {
+	public void subscribeToTheTopic(String topic) {
 		
-		mqttClient.subscribe(topic);
+		try {
+			mqttClient.subscribe(topic);
+		} catch (MqttException e) {
+			System.out.println("The subscription failed: " + topic);
+		}
 	}
 	
 	public boolean isConnected() {
 		return mqttClient.isConnected();
+	}
+	
+	private void subAndPubInit() throws MqttException {
+		
+		ArrayList<String> listOfRooms = new ArrayList<>();
+		StringTokenizer stringTokenizer = new StringTokenizer(allRooms, ";");
+		while(stringTokenizer.hasMoreTokens()) {
+			listOfRooms.add(stringTokenizer.nextToken());
+		}
+		
+		for(String room : listOfRooms) {
+			subscribeToTheTopic("home/" + room + "/lights/status");
+			subscribeToTheTopic("home/" + room + "/mcu/ts/value");
+			subscribeToTheTopic("home/" + room + "/mcu/status");
+			subscribeToTheTopic("home/" + room + "/temperature/value");
+			subscribeToTheTopic("home/" + room + "/humidity/value");
+			publishMessage("home/" + room + "/lights/check", "1");
+			publishMessage("home/" + room + "/mcu/ts/check", "1");
+			publishMessage("home/" + room + "/mcu/check", "1");
+			publishMessage("home/" + room + "/temperature/check", "1");
+			publishMessage("home/" + room + "/humidity/check", "1");
+		}
 	}
 }

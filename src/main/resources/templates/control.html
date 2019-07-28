@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Control</title>
+  </head>
+  <body>
+    <h1 align="center">
+      <b><u>Control</u></b>
+    </h1>
+
+    <br />
+
+    <table align="center" width="800" height="200">
+      <tr>
+        <th></th>
+        <th><b>Light status</b></th>
+        <th><b>Light switch</b></th>
+        <th><b>Temperature</b></th>
+        <th><b>Humidity</b></th>
+      </tr>
+
+      <tr align="center">
+        <td><b>Living room</b></td>
+        <td th:text="${livingroomLightStatus}">lightStatus</td>
+        <td>
+          <a href="livingroom">ON/OFF</a>
+        </td>
+        <td><span th:text="${livingroomTemperature}">X</span> °C</td>
+        <td><span th:text="${livingroomHumidity}">X</span> %</td>
+      </tr>
+
+      <tr align="center">
+        <td><b>Kitchen</b></td>
+        <td th:text="${kitchenLightStatus}">lightStatus</td>
+        <td>
+          <a href="kitchen">ON/OFF</a>
+        </td>
+        <td><span th:text="${kitchenTemperature}">X</span> °C</td>
+        <td><span th:text="${kitchenHumidity}">X</span> %</td>
+      </tr>
+
+      <tr align="center">
+        <td><b>Outside</b></td>
+        <td th:text="${outsideLightStatus}">lightStatus</td>
+        <td>
+          <a href="outside">ON/OFF</a>
+        </td>
+        <td><span th:text="${outsideTemperature}">X</span> °C</td>
+        <td><span th:text="${outsideHumidity}">X</span> %</td>
+      </tr>
+    </table>
+
+    <br />
+
+    <table align="center" width="200" height="100">
+      <tr>
+        <td><b>ALL OFF</b></td>
+        <td>
+          <a href="allLightsOff">OFF</a>
+        </td>
+      </tr>
+    </table>
+
+    <div th:replace="fragments/menu :: control-footer">Footer goes here.</div>
+  </body>
+</html>

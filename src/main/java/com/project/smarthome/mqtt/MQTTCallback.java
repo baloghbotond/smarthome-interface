@@ -97,6 +97,18 @@ public class MQTTCallback implements MqttCallback{
 			statusFields.setActualOutsideTemp(Integer.parseInt(message.toString()));
 			statusFields.setNewOutsideTempFlag(!statusFields.isNewOutsideTempFlag());
 		}
+		
+		if(topic.equals("home/livingroom/humidity/value")) {
+			statusFields.setActualLivingroomHum(Integer.parseInt(message.toString()));
+		}
+		
+		if(topic.equals("home/kitchen/humidity/value")) {
+			statusFields.setActualKitchenHum(Integer.parseInt(message.toString()));
+		}
+		
+		if(topic.equals("home/outside/humidity/value")) {
+			statusFields.setActualOutsideHum(Integer.parseInt(message.toString()));
+		}
 	}
 
 	@Override

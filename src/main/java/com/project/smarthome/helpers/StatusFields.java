@@ -21,6 +21,29 @@ public class StatusFields {
 	private int actualKitchenTemp;
 	private int actualOutsideTemp;
 	
+	private int actualLivingroomHum;
+	private int actualKitchenHum;
+	private int actualOutsideHum;
+	
+	public int getActualLivingroomHum() {
+		return actualLivingroomHum;
+	}
+	public void setActualLivingroomHum(int actualLivingroomHum) {
+		this.actualLivingroomHum = actualLivingroomHum;
+	}
+	public int getActualKitchenHum() {
+		return actualKitchenHum;
+	}
+	public void setActualKitchenHum(int actualKitchenHum) {
+		this.actualKitchenHum = actualKitchenHum;
+	}
+	public int getActualOutsideHum() {
+		return actualOutsideHum;
+	}
+	public void setActualOutsideHum(int actualOutsideHum) {
+		this.actualOutsideHum = actualOutsideHum;
+	}
+
 	private boolean newLivingroomTempFlag;
 	private boolean newKitchenTempFlag;
 	private boolean newOutsideTempFlag;
@@ -188,6 +211,21 @@ public class StatusFields {
 		
 		else {
 			return actualOutsideTemp;
+		}
+	}
+	
+	public int getHumidity(String room) {
+		
+		if(room.equals("livingroom")) {
+			return actualLivingroomHum;
+		}
+		
+		else if(room.equals("kitchen")) {
+			return actualKitchenHum;
+		}
+		
+		else {
+			return actualOutsideHum;
 		}
 	}
 	

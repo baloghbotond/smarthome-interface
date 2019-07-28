@@ -38,6 +38,11 @@ public class StatusHelper {
 		return statusFields.getTemperature(room);
 	}
 	
+	public static int displayHumidity(String room) {
+		
+		return statusFields.getHumidity(room);
+	}
+	
 	public void waitForLightStatus(String room) {
 		
 		int countTimeout = 0;
