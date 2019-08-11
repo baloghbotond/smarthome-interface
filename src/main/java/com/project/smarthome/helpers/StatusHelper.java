@@ -1,11 +1,30 @@
 package com.project.smarthome.helpers;
 
+import java.util.Calendar;
+import java.util.StringTokenizer;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.project.smarthome.entities.Kitchen;
+import com.project.smarthome.entities.Livingroom;
+import com.project.smarthome.entities.Outside;
+import com.project.smarthome.services.KitchenService;
+import com.project.smarthome.services.LivingroomService;
+import com.project.smarthome.services.OutsideService;
 
 @Component
 public class StatusHelper {
 
+	@Autowired
+	private KitchenService kitchenService;
+	
+	@Autowired
+	private LivingroomService livingroomService;
+	
+	@Autowired
+	private OutsideService outsideService;
+	
 	private static StatusFields statusFields;
 	
 	@Autowired
@@ -96,6 +115,30 @@ public class StatusHelper {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+		}
+	}
+	
+	public void tempHumMapper(String topic, String message) {
+		Calendar dateOfReceiving = Calendar.getInstance();
+		
+		StringTokenizer strTokForTheTopic = new StringTokenizer(topic, "/");
+		strTokForTheTopic.nextToken();
+		String room = strTokForTheTopic.nextToken();
+		
+		StringTokenizer strTokForTheMessage = new StringTokenizer(message, ";");
+		int temperature = Integer.parseInt(strTokForTheMessage.nextToken());
+		int humidity = Integer.parseInt(strTokForTheMessage.nextToken());
+		
+		if(room.equals("kitchen")) {
+			kitchenService.save(new Kitchen(temperature, humidity, dateOfReceiving));
+		}
+		
+		if(room.equals("livingroom")) {
+			livingroomService.save(new Livingroom(temperature, humidity, dateOfReceiving));
+		}
+		
+		if(room.equals("outside")) {
+			outsideService.save(new Outside(temperature, humidity, dateOfReceiving));
 		}
 	}
 }

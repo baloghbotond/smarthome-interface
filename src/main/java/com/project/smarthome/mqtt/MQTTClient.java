@@ -93,6 +93,7 @@ public class MQTTClient {
 			subscribeToTheTopic("home/" + room + "/humidity/value");
 			subscribeToTheTopic("home/" + room + "/app/check");
 			subscribeToTheTopic("home/" + room + "/time/sync/req");
+			subscribeToTheTopic("home/" + room + "/object");
 			publishMessage("home/" + room + "/lights/check", "1");
 			publishMessage("home/" + room + "/mcu/ts/check", "1");
 			publishMessage("home/" + room + "/mcu/check", "1");

@@ -1,5 +1,8 @@
 package com.project.smarthome.mqtt;
 
+import java.util.Calendar;
+import java.util.StringTokenizer;
+
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
@@ -8,15 +11,19 @@ import org.springframework.stereotype.Component;
 
 import com.project.smarthome.helpers.McuTimeSync;
 import com.project.smarthome.helpers.StatusFields;
+import com.project.smarthome.helpers.StatusHelper;
 
 @Component
 public class MQTTCallback implements MqttCallback {
 
 	@Autowired
 	private StatusFields statusFields;
-	
+
 	@Autowired
 	private MQTTClient mqttClient;
+	
+	@Autowired
+	private StatusHelper statusHelper;
 
 	@Override
 	public void connectionLost(Throwable cause) {
@@ -120,15 +127,20 @@ public class MQTTCallback implements MqttCallback {
 			mqttClient.publishMessage("home/livingroom/app/status", "1");
 			mqttClient.publishMessage("home/kitchen/app/status", "1");
 		}
-		
-		if(topic.equals("home/livingroom/time/sync/req")) {
+
+		if (topic.equals("home/livingroom/time/sync/req")) {
 			String syncTime = Integer.toString(new McuTimeSync().getSyncTime());
 			mqttClient.publishMessage("home/livingroom/time/sync/value", syncTime);
 		}
-		
-		if(topic.equals("home/kitchen/time/sync/req")) {
+
+		if (topic.equals("home/kitchen/time/sync/req")) {
 			String syncTime = Integer.toString(new McuTimeSync().getSyncTime());
 			mqttClient.publishMessage("home/kitchen/time/sync/value", syncTime);
+		}
+
+		if (topic.equals("home/livingroom/object") || topic.equals("home/kitchen/object")
+				|| topic.equals("home/outside/object")) {
+			statusHelper.tempHumMapper(topic, message.toString());
 		}
 	}
 

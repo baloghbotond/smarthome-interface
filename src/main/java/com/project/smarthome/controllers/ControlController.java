@@ -1,14 +1,18 @@
 package com.project.smarthome.controllers;
 
+import java.util.Calendar;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.project.smarthome.entities.Kitchen;
 import com.project.smarthome.helpers.StatusFields;
 import com.project.smarthome.helpers.StatusHelper;
 import com.project.smarthome.mqtt.MQTTClient;
+import com.project.smarthome.services.KitchenService;
 
 @Controller
 @RequestMapping(path = "control")
@@ -23,10 +27,16 @@ public class ControlController {
 	@Autowired
 	private StatusHelper statusHelper;
 	
+	@Autowired
+	private KitchenService kitchenService;
+	
 	@RequestMapping("/home")
 	public String home(Model model) {
 		
 		settingTheAttributes(model);
+		
+		Calendar calendar = Calendar.getInstance();
+		kitchenService.save(new Kitchen(40, 100, calendar));
 		
 		return "control";
 	}
