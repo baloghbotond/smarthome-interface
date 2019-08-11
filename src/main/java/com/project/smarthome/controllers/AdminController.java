@@ -5,7 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.project.smarthome.helpers.StatusFields;
 import com.project.smarthome.helpers.StatusHelper;
@@ -32,7 +31,7 @@ public class AdminController {
 		return "admin";
 	}
 	
-	@RequestMapping("/sleep/{room}")
+	@RequestMapping("/mcu_{room}")
 	public String mcuStatus(@PathVariable("room") String room, Model model) {
 
 		if (statusFields.getMcuStatus(room) == 0) {
@@ -50,28 +49,52 @@ public class AdminController {
 		return "admin";
 	}
 	
-	@RequestMapping("/ts/{room}")
-	public String sampleTime(@PathVariable("room") String room, @RequestParam("newTsValue") String newValue,
-			Model model) {
+	@RequestMapping("/{room}")
+	public String lights(@PathVariable("room") String room, Model model) {
+			
+		if (statusFields.getLightStatus(room) == 0) {
+			mqttClient.publishMessage("home/" + room + "/lights", "1");
+		}
 
-		mqttClient.publishMessage("home/" + room + "/mcu/ts/set", newValue);
+		if (statusFields.getLightStatus(room) == 1) {
+			mqttClient.publishMessage("home/" + room + "/lights", "0");
+		}
 
-		statusHelper.waitForTsValue(room);
+		statusHelper.waitForLightStatus(room);
 
 		settingTheAttributes(model);
 		
 		return "admin";
 	}
 	
-private Model settingTheAttributes(Model model) {
+	@RequestMapping("/all")
+	public String everywhereOff(Model model) {
+		
+		mqttClient.publishMessage("home/everywhere/lights", "0");
+		
+		statusHelper.waitForLightStatus("livingroom");
+		settingTheAttributes(model);
+		
+		return "admin";
+	}
+	
+	private Model settingTheAttributes(Model model) {
+		
+		model.addAttribute("livingroomLightStatus", StatusHelper.displayLightStatus("livingroom"));
+		model.addAttribute("kitchenLightStatus", StatusHelper.displayLightStatus("kitchen"));
+		model.addAttribute("outsideLightStatus", StatusHelper.displayLightStatus("outside"));
+		
+		model.addAttribute("livingroomTemperature", StatusHelper.displayTemperature("livingroom"));
+		model.addAttribute("kitchenTemperature", StatusHelper.displayTemperature("kitchen"));
+		model.addAttribute("outsideTemperature", StatusHelper.displayTemperature("outside"));
+		
+		model.addAttribute("livingroomHumidity", StatusHelper.displayHumidity("livingroom"));
+		model.addAttribute("kitchenHumidity", StatusHelper.displayHumidity("kitchen"));
+		model.addAttribute("outsideHumidity", StatusHelper.displayHumidity("outside"));
 		
 		model.addAttribute("livingroomMcuStatus", StatusHelper.displayMcuStatus("livingroom"));
 		model.addAttribute("kitchenMcuStatus", StatusHelper.displayMcuStatus("kitchen"));
 		model.addAttribute("outsideMcuStatus", StatusHelper.displayMcuStatus("outside"));
-		
-		model.addAttribute("livingroomTs", StatusHelper.displayMcuTs("livingroom"));
-		model.addAttribute("kitchenTs", StatusHelper.displayMcuTs("kitchen"));
-		model.addAttribute("outsideTs", StatusHelper.displayMcuTs("outside"));
 		
 		return model;
 	}

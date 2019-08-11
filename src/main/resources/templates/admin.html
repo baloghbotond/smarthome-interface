@@ -1,67 +1,74 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title>Admin</title>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Admin</title>
+  </head>
+  <body>
+    <h1 align="center">
+      <b><u>Admin</u></b>
+    </h1>
 
-	<h1 align="center"><b><u>Admin</u></b></h1>
-	
-	<h3 align="center">Database</h3>
-	
-	<hr>
-	
-	<h3 align="center">Microcontrollers</h3>
-	
-	<table align="center" width="800" height="100">
-		<tr>
-			<td><h4>Living room</h4></td>
-			<td th:text="${livingroomMcuStatus}">status</td>
-			<td>
-				<a href="sleep/livingroom">ON/OFF</a>
-			</td>
-			<td>
-				<form action="ts/livingroom">
-					Sample time: <input type="text" name="newTsValue">
-					<input type="submit" value="Submit">
-				</form>
-			</td>
-			<td>Sample time: <span th:text="${livingroomTs}")>X</span> min.</td>
-		</tr>
-		
-		<tr>
-			<td><h4>Kitchen</h4></td>
-			<td th:text="${kitchenMcuStatus}">status</td>
-			<td>
-				<a href="sleep/kitchen">ON/OFF</a>
-			</td>
-			<td>
-				<form action="ts/kitchen">
-					Sample time: <input type="text" name="newTsValue">
-					<input type="submit" value="Submit">
-				</form>
-			</td>
-			<td>Sample time: <span th:text="${kitchenTs}")>X</span> min.</td>
-		</tr>
-		
-		<tr>
-			<td><h4>Outside</h4></td>
-			<td th:text="${outsideMcuStatus}">status</td>
-			<td>
-				<a href="sleep/outside">ON/OFF</a>
-			</td>
-			<td>
-				<form action="ts/outside">
-					Sample time: <input type="text" name="newTsValue">
-					<input type="submit" value="Submit">
-				</form>
-			</td>
-			<td>Sample time: <span th:text="${outsideTs}")>X</span> min.</td>
-		</tr>
-	</table>
-	
-	<div th:replace="fragments/menu :: admin-footer">Footer goes here.</div>
-	
-</body>
+    <br />
+
+    <table align="center" width="1200" height="200">
+      <tr>
+        <th></th>
+        <th><b>Light status</b></th>
+        <th><b>Light switch</b></th>
+        <th><b>Temperature</b></th>
+        <th><b>Humidity</b></th>
+        <th></th>
+        <th><b>MCU status</b></th>
+        <th><b>MCU switch</b></th>
+      </tr>
+
+      <tr align="center">
+        <td><b>Living room</b></td>
+        <td th:text="${livingroomLightStatus}">lightStatus</td>
+        <td><a href="livingroom">ON/OFF</a></td>
+        <td><span th:text="${livingroomTemperature}">X</span> °C</td>
+        <td><span th:text="${livingroomHumidity}">X</span> %</td>
+        <td>|</td>
+        <td th:text="${livingroomMcuStatus}">mcuStatus</td>
+        <td><a href="mcu_livingroom">ON/OFF</a></td>
+      </tr>
+
+      <tr align="center">
+        <td><b>Kitchen</b></td>
+        <td th:text="${kitchenLightStatus}">lightStatus</td>
+        <td><a href="kitchen">ON/OFF</a></td>
+        <td><span th:text="${kitchenTemperature}">X</span> °C</td>
+        <td><span th:text="${kitchenHumidity}">X</span> %</td>
+        <td>|</td>
+        <td th:text="${kitchenMcuStatus}">mcuStatus</td>
+        <td><a href="mcu_kitchen">ON/OFF</a></td>
+      </tr>
+
+      <tr align="center">
+        <td><b>Outside</b></td>
+        <td th:text="${outsideLightStatus}">lightStatus</td>
+        <td><a href="outside">ON/OFF</a></td>
+        <td><span th:text="${outsideTemperature}">X</span> °C</td>
+        <td><span th:text="${outsideHumidity}">X</span> %</td>
+        <td>|</td>
+        <td th:text="${outsideMcuStatus}">mcuStatus</td>
+        <td><a href="mcu_outside">ON/OFF</a></td>
+      </tr>
+       
+    </table>
+
+    <br />
+
+    <table align="center" width="200" height="100">
+      <tr>
+        <td><b>ALL OFF</b></td>
+        <td>
+          <a href="all">OFF</a>
+        </td>
+      </tr>
+    </table>
+
+    <div th:replace="fragments/menu :: admin-footer">Footer goes here.</div>
+  </body>
 </html>

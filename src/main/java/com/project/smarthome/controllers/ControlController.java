@@ -49,11 +49,12 @@ public class ControlController {
 		return "control";
 	}
 	
-	@RequestMapping("allLightsOff")
+	@RequestMapping("/all")
 	public String everywhereOff(Model model) {
 		
 		mqttClient.publishMessage("home/everywhere/lights", "0");
 		
+		statusHelper.waitForLightStatus("livingroom");
 		settingTheAttributes(model);
 		
 		return "control";
