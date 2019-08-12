@@ -16,28 +16,26 @@ import com.project.smarthome.services.OutsideService;
 @Component
 public class StatusHelper {
 
-	@Autowired
 	private KitchenService kitchenService;
-	
-	@Autowired
 	private LivingroomService livingroomService;
-	
-	@Autowired
 	private OutsideService outsideService;
-	
-	private static StatusFields statusFields;
+	private StatusFields statusFields;
 	
 	@Autowired
-	public StatusHelper(StatusFields statusFields) {
+	public StatusHelper(KitchenService kitchenService, LivingroomService livingroomService,
+			OutsideService outsideService, StatusFields statusFields) {
+		this.kitchenService = kitchenService;
+		this.livingroomService = livingroomService;
+		this.outsideService = outsideService;
 		this.statusFields = statusFields;
 	}
 	
-	public static int displayLightStatus(String room) {
+	public int displayLightStatus(String room) {
 	
 		return statusFields.getLightStatus(room);
 	}
-	
-	public static String displayMcuStatus(String room) {
+
+	public String displayMcuStatus(String room) {
 		
 		if(statusFields.getMcuStatus(room) == 0) {
 			return "OFF";
@@ -47,17 +45,17 @@ public class StatusHelper {
 		}
 	}
 	
-	public static int displayMcuTs(String room) {
+	public int displayMcuTs(String room) {
 		
 		return statusFields.getSampleTime(room);
 	}
 	
-	public static int displayTemperature(String room) {
+	public int displayTemperature(String room) {
 		
 		return statusFields.getTemperature(room);
 	}
 	
-	public static int displayHumidity(String room) {
+	public int displayHumidity(String room) {
 		
 		return statusFields.getHumidity(room);
 	}

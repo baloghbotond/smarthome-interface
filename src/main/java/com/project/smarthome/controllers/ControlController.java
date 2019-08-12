@@ -64,17 +64,17 @@ public class ControlController {
 
 	private Model settingTheAttributes(Model model) {
 
-		model.addAttribute("livingroomLightStatus", StatusHelper.displayLightStatus("livingroom"));
-		model.addAttribute("kitchenLightStatus", StatusHelper.displayLightStatus("kitchen"));
-		model.addAttribute("outsideLightStatus", StatusHelper.displayLightStatus("outside"));
+		model.addAttribute("livingroomLightStatus", statusHelper.displayLightStatus("livingroom"));
+		model.addAttribute("kitchenLightStatus", statusHelper.displayLightStatus("kitchen"));
+		model.addAttribute("outsideLightStatus", statusHelper.displayLightStatus("outside"));
 
-		model.addAttribute("livingroomTemperature", StatusHelper.displayTemperature("livingroom"));
-		model.addAttribute("kitchenTemperature", StatusHelper.displayTemperature("kitchen"));
-		model.addAttribute("outsideTemperature", StatusHelper.displayTemperature("outside"));
+		model.addAttribute("livingroomTemperature", statusHelper.displayTemperature("livingroom"));
+		model.addAttribute("kitchenTemperature", statusHelper.displayTemperature("kitchen"));
+		model.addAttribute("outsideTemperature", statusHelper.displayTemperature("outside"));
 
-		model.addAttribute("livingroomHumidity", StatusHelper.displayHumidity("livingroom"));
-		model.addAttribute("kitchenHumidity", StatusHelper.displayHumidity("kitchen"));
-		model.addAttribute("outsideHumidity", StatusHelper.displayHumidity("outside"));
+		model.addAttribute("livingroomHumidity", statusHelper.displayHumidity("livingroom"));
+		model.addAttribute("kitchenHumidity", statusHelper.displayHumidity("kitchen"));
+		model.addAttribute("outsideHumidity", statusHelper.displayHumidity("outside"));
 
 		return model;
 	}
