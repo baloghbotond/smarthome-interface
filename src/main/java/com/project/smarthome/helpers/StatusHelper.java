@@ -104,20 +104,6 @@ public class StatusHelper {
 		}
 	}
 	
-	public void waitForNewTemperature(String room) {
-		
-		int countTimeout = 0;
-		boolean lastStatus = statusFields.getTemperatureFlag(room);
-		while(lastStatus == statusFields.getTemperatureFlag(room) && countTimeout < 10000) {
-			try {
-				Thread.sleep(1);
-				countTimeout++;
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-	
 	public void tempHumMapper(String topic, String message) {
 		Calendar dateOfReceiving = Calendar.getInstance();
 		
@@ -131,14 +117,20 @@ public class StatusHelper {
 		
 		if(room.equals("kitchen")) {
 			kitchenService.save(new Kitchen(temperature, humidity, dateOfReceiving));
+			statusFields.setActualKitchenTemp(temperature);
+			statusFields.setActualKitchenHum(humidity);
 		}
 		
 		if(room.equals("livingroom")) {
 			livingroomService.save(new Livingroom(temperature, humidity, dateOfReceiving));
+			statusFields.setActualLivingroomTemp(temperature);
+			statusFields.setActualLivingroomHum(humidity);
 		}
 		
 		if(room.equals("outside")) {
 			outsideService.save(new Outside(temperature, humidity, dateOfReceiving));
+			statusFields.setActualOutsideTemp(temperature);
+			statusFields.setActualOutsideHum(humidity);
 		}
 	}
 }

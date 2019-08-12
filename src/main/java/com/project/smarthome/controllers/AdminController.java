@@ -14,15 +14,17 @@ import com.project.smarthome.mqtt.MQTTClient;
 @RequestMapping(path = "admin")
 public class AdminController {
 
-	@Autowired
 	private MQTTClient mqttClient;
-	
-	@Autowired
 	private StatusFields statusFields;
-	
-	@Autowired
 	private StatusHelper statusHelper;
 	
+	@Autowired
+	public AdminController(MQTTClient mqttClient, StatusFields statusFields, StatusHelper statusHelper) {
+		this.mqttClient = mqttClient;
+		this.statusFields = statusFields;
+		this.statusHelper = statusHelper;
+	}
+
 	@RequestMapping("/home")
 	public String home(Model model) {
 		

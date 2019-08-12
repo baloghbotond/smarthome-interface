@@ -43,29 +43,6 @@ public class StatusFields {
 	public void setActualOutsideHum(int actualOutsideHum) {
 		this.actualOutsideHum = actualOutsideHum;
 	}
-
-	private boolean newLivingroomTempFlag;
-	private boolean newKitchenTempFlag;
-	private boolean newOutsideTempFlag;
-	
-	public boolean isNewLivingroomTempFlag() {
-		return newLivingroomTempFlag;
-	}
-	public void setNewLivingroomTempFlag(boolean newLivingroomTempFlag) {
-		this.newLivingroomTempFlag = newLivingroomTempFlag;
-	}
-	public boolean isNewKitchenTempFlag() {
-		return newKitchenTempFlag;
-	}
-	public void setNewKitchenTempFlag(boolean newKitchenTempFlag) {
-		this.newKitchenTempFlag = newKitchenTempFlag;
-	}
-	public boolean isNewOutsideTempFlag() {
-		return newOutsideTempFlag;
-	}
-	public void setNewOutsideTempFlag(boolean newOutsideTempFlag) {
-		this.newOutsideTempFlag = newOutsideTempFlag;
-	}
 	public int getActualLivingroomTemp() {
 		return actualLivingroomTemp;
 	}
@@ -181,21 +158,6 @@ public class StatusFields {
 		
 		else {
 			return outsideTs;
-		}
-	}
-	
-	public boolean getTemperatureFlag(String room) {
-		
-		if(room.equals("livingroom")) {
-			return newLivingroomTempFlag;
-		}
-		
-		else if(room.equals("kitchen")) {
-			return newKitchenTempFlag;
-		}
-		
-		else {
-			return newOutsideTempFlag;
 		}
 	}
 	

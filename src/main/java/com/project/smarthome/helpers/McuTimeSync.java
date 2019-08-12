@@ -2,6 +2,9 @@ package com.project.smarthome.helpers;
 
 import java.util.Calendar;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class McuTimeSync {
 
 	private int minutePuffer;
@@ -19,11 +22,8 @@ public class McuTimeSync {
 				minutePuffer = (5 * (i + 1)) - minute - 1;
 			}
 		}
-		
 		secondPuffer = 60 - second;
-		
 		int syncTime = (minutePuffer * 60) + (secondPuffer);
-		System.out.println(syncTime);
 		
 		return syncTime;
 	}
