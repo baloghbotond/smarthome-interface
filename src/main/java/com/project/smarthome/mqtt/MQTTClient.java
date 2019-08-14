@@ -86,7 +86,9 @@ public class MQTTClient {
 		}
 		
 		subscribeToTheTopic("home/java/app/check");
+		subscribeToTheTopic("home/livingroom/regulator/status");
 		publishMessage("home/java/app/status", "1");
+		publishMessage("home/livingroom/regulator/check", "1");
 		
 		for(String room : listOfRooms) {
 			subscribeToTheTopic("home/" + room + "/lights/status");
@@ -95,9 +97,9 @@ public class MQTTClient {
 			subscribeToTheTopic("home/" + room + "/humidity/value");
 			subscribeToTheTopic("home/" + room + "/time/sync/req");
 			subscribeToTheTopic("home/" + room + "/object");
+			publishMessage("home/" + room + "/temperature/check", "1");
 			publishMessage("home/" + room + "/lights/check", "1");
 			publishMessage("home/" + room + "/mcu/check", "1");
-			publishMessage("home/" + room + "/temperature/check", "1");
 			publishMessage("home/" + room + "/humidity/check", "1");
 		}
 	}

@@ -25,6 +25,15 @@ public class StatusFields {
 	private int actualKitchenHum;
 	private int actualOutsideHum;
 	
+	private boolean regulatorWorkingFlag;
+	
+	
+	public boolean isRegulatorWorkingFlag() {
+		return regulatorWorkingFlag;
+	}
+	public void setRegulatorWorkingFlag(boolean regulatorWorkingFlag) {
+		this.regulatorWorkingFlag = regulatorWorkingFlag;
+	}
 	public int getActualLivingroomHum() {
 		return actualLivingroomHum;
 	}

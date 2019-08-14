@@ -136,6 +136,15 @@ public class MQTTCallback implements MqttCallback {
 				|| topic.equals("home/outside/object")) {
 			statusHelper.tempHumMapper(topic, message.toString());
 		}
+		
+		if(topic.equals("home/livingroom/regulator/status")) {
+			if(message.toString().equals("0")) {
+				statusFields.setRegulatorWorkingFlag(false);
+			}
+			else if(message.toString().equals("1")) {
+				statusFields.setRegulatorWorkingFlag(true);
+			}
+		}
 	}
 
 	@Override

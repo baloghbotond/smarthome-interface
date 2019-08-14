@@ -45,6 +45,16 @@ public class StatusHelper {
 		}
 	}
 	
+	public String displayLivingroomRegulatorStatus() {
+		
+		if(statusFields.isRegulatorWorkingFlag() == false) {
+			return "OFF";
+		}
+		else {
+			return "ON";
+		}
+	}
+	
 	public int displayMcuTs(String room) {
 		
 		return statusFields.getSampleTime(room);

@@ -1,39 +1,47 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>Smarthome</title>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <title>Smarthome</title>
+  </head>
 
-	<h1 align="center"><b>Smarthome</b></h1>
+  <body>
+    <div class="container">
+      <h1 class="text-center font-weight-bold">Smarthome</h1>
 
-	<br/>
-	
-	<table align="center" width="50" height="50">
-		<tr>
-			<td>
-				<a href="control/home">Control</a>
-			</td>
-			<td>
-				<a href="admin/home">Admin</a>
-			</td>
-		</tr>
-		
-		<tr>
-			<td>
-				<button type="button">
-					Rooms
-				</button>
-			</td>
-			
-			<td>
-				<button type="button">
-					Security
-				</button>
-			</td>
-		</tr>
-	</table>
-
-</body>
+      <br />
+      <div class="d-flex justify-content-center row-h1">
+        <div class="p-4 item-hl">
+          <a
+            href="control/home"
+            id="control-home-btn"
+            class="btn btn-primary btn-lg"
+            >Control</a
+          >
+        </div>
+        <div class="p-4 item-hl">
+          <a
+            href="admin/home"
+            id="admin-home-btn"
+            class="btn btn-success btn-lg"
+            >Admin</a
+          >
+        </div>
+        <div class="p-4 item-hl">
+          <a
+            href="history/home"
+            id="history-home-btn"
+            class="btn btn-warning btn-lg"
+            >History</a
+          >
+        </div>
+      </div>
+    </div>
+  </body>
 </html>

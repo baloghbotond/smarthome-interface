@@ -98,6 +98,8 @@ public class AdminController {
 		model.addAttribute("kitchenMcuStatus", statusHelper.displayMcuStatus("kitchen"));
 		model.addAttribute("outsideMcuStatus", statusHelper.displayMcuStatus("outside"));
 		
+		model.addAttribute("livingroomRegulator", statusHelper.displayLivingroomRegulatorStatus());
+		
 		return model;
 	}
 

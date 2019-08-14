@@ -2,73 +2,132 @@
 <html xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
     <title>Admin</title>
   </head>
+
   <body>
-    <h1 align="center">
-      <b><u>Admin</u></b>
-    </h1>
+    <div class="container">
+      <h1 class="text-center font-weight-bold">Admin</h1>
 
-    <br />
+      <br />
 
-    <table align="center" width="1200" height="200">
-      <tr>
-        <th></th>
-        <th><b>Light status</b></th>
-        <th><b>Light switch</b></th>
-        <th><b>Temperature</b></th>
-        <th><b>Humidity</b></th>
-        <th></th>
-        <th><b>MCU status</b></th>
-        <th><b>MCU switch</b></th>
-      </tr>
+      <table class="table table-striped" width="1200" height="200">
+        <thead class="thead-dark">
+          <tr class="text-center">
+            <th></th>
+            <th><b>Light status</b></th>
+            <th><b>Light switch</b></th>
+            <th><b>Temperature</b></th>
+            <th><b>Humidity</b></th>
+            <th></th>
+            <th><b>MCU status</b></th>
+            <th><b>MCU switch</b></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="text-center">
+            <th scope="row">Living room</th>
+            <td th:text="${livingroomLightStatus}">lightStatus</td>
+            <td>
+              <a
+                href="livingroom"
+                id="livingroom-light-btn"
+                class="btn btn-primary btn-sm"
+                >ON/OFF</a
+              >
+            </td>
+            <td><span th:text="${livingroomTemperature}">X</span> °C</td>
+            <td><span th:text="${livingroomHumidity}">X</span> %</td>
+            <td>|</td>
+            <td th:text="${livingroomMcuStatus}">mcuStatus</td>
+            <td>
+              <a
+                href="mcu_livingroom"
+                id="livingroom-mcu-btn"
+                class="btn btn-danger btn-sm"
+                >ON/OFF</a
+              >
+            </td>
+          </tr>
 
-      <tr align="center">
-        <td><b>Living room</b></td>
-        <td th:text="${livingroomLightStatus}">lightStatus</td>
-        <td><a href="livingroom">ON/OFF</a></td>
-        <td><span th:text="${livingroomTemperature}">X</span> °C</td>
-        <td><span th:text="${livingroomHumidity}">X</span> %</td>
-        <td>|</td>
-        <td th:text="${livingroomMcuStatus}">mcuStatus</td>
-        <td><a href="mcu_livingroom">ON/OFF</a></td>
-      </tr>
+          <tr class="text-center">
+            <th scope="row">Kitchen</th>
+            <td th:text="${kitchenLightStatus}">lightStatus</td>
+            <td>
+              <a
+                href="kitchen"
+                id="kitchen-light-btn"
+                class="btn btn-primary btn-sm"
+                >ON/OFF</a
+              >
+            </td>
+            <td><span th:text="${kitchenTemperature}">X</span> °C</td>
+            <td><span th:text="${kitchenHumidity}">X</span> %</td>
+            <td>|</td>
+            <td th:text="${kitchenMcuStatus}">mcuStatus</td>
+            <td>
+              <a
+                href="mcu_kitchen"
+                id="kitchen-mcu-btn"
+                class="btn btn-danger btn-sm"
+                >ON/OFF</a
+              >
+            </td>
+          </tr>
 
-      <tr align="center">
-        <td><b>Kitchen</b></td>
-        <td th:text="${kitchenLightStatus}">lightStatus</td>
-        <td><a href="kitchen">ON/OFF</a></td>
-        <td><span th:text="${kitchenTemperature}">X</span> °C</td>
-        <td><span th:text="${kitchenHumidity}">X</span> %</td>
-        <td>|</td>
-        <td th:text="${kitchenMcuStatus}">mcuStatus</td>
-        <td><a href="mcu_kitchen">ON/OFF</a></td>
-      </tr>
+          <tr class="text-center">
+            <th scope="row">Outside</th>
+            <td th:text="${outsideLightStatus}">lightStatus</td>
+            <td>
+              <a
+                href="outside"
+                id="outside-light-btn"
+                class="btn btn-primary btn-sm"
+                >ON/OFF</a
+              >
+            </td>
+            <td><span th:text="${outsideTemperature}">X</span> °C</td>
+            <td><span th:text="${outsideHumidity}">X</span> %</td>
+            <td>|</td>
+            <td th:text="${outsideMcuStatus}">mcuStatus</td>
+            <td>
+              <a
+                href="mcu_outside"
+                id="outside-mcu-btn"
+                class="btn btn-danger btn-sm"
+                >ON/OFF</a
+              >
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
-      <tr align="center">
-        <td><b>Outside</b></td>
-        <td th:text="${outsideLightStatus}">lightStatus</td>
-        <td><a href="outside">ON/OFF</a></td>
-        <td><span th:text="${outsideTemperature}">X</span> °C</td>
-        <td><span th:text="${outsideHumidity}">X</span> %</td>
-        <td>|</td>
-        <td th:text="${outsideMcuStatus}">mcuStatus</td>
-        <td><a href="mcu_outside">ON/OFF</a></td>
-      </tr>
-       
-    </table>
+      <br />
 
-    <br />
+      <div class="d-flex justify-content-center row-hl">
+        <div class="p-2 item-hl">
+          <a
+            href="all"
+            id="outside-mcu-btn"
+            class="btn btn-danger btn-sm"
+            >ALL LIGHTS OFF</a
+          >
+        </div>
+      </div>
 
-    <table align="center" width="200" height="100">
-      <tr>
-        <td><b>ALL OFF</b></td>
-        <td>
-          <a href="all">OFF</a>
-        </td>
-      </tr>
-    </table>
+      <hr />
+      <div class="text-center">
+        Living room humidity regulator:
+        <span th:text="${livingroomRegulator}">X</span>
+      </div>
 
-    <div th:replace="fragments/menu :: admin-footer">Footer goes here.</div>
+      <div th:replace="fragments/menu :: admin-footer">Footer goes here.</div>
+    </div>
   </body>
 </html>

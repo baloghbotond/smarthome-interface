@@ -75,6 +75,8 @@ public class ControlController {
 		model.addAttribute("livingroomHumidity", statusHelper.displayHumidity("livingroom"));
 		model.addAttribute("kitchenHumidity", statusHelper.displayHumidity("kitchen"));
 		model.addAttribute("outsideHumidity", statusHelper.displayHumidity("outside"));
+		
+		model.addAttribute("livingroomRegulator", statusHelper.displayLivingroomRegulatorStatus());
 
 		return model;
 	}
