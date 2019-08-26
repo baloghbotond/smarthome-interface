@@ -145,6 +145,15 @@ public class MQTTCallback implements MqttCallback {
 				statusFields.setRegulatorWorkingFlag(true);
 			}
 		}
+		
+		if(topic.equals("home/livingroom/regulator/optimum/value")) {
+			statusFields.setRegulatorOptimum(Integer.parseInt(message.toString()));
+		}
+		
+		if(topic.equals("home/livingroom/regulator/range/value")) {
+			statusFields.setRegulatorRange(Integer.parseInt(message.toString()));
+			statusFields.setNewRegulatorValues(!statusFields.isNewRegulatorValues());
+		}
 	}
 
 	@Override

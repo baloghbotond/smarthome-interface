@@ -1,28 +1,21 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<head>
 
-	<body>
+</head>
+<body>
 
-		<div th:fragment="control-footer">
-			<table align="center" width="200" height="100">
-				<tr>
-					<td><a href="/">Home</a></td>
-					<td><a href="/admin/home">Admin</a></td>
-					<td>Rooms</td>
-				</tr>
-			</table>
+	<div class="container" id="navigation" th:fragment="navbar">
+		<div>
+			<a href="/control/home"><i class="m-3 fas fa-home fa-2x"></i></a> <a
+				href="/regulator/home"><i
+				class="m-3 fas fa-tachometer-alt fa-2x"></i></a> <a
+				href="http://5.187.246.246:3000/d/RI-PUzZRz/test-dashboard"
+				target="_blank"><i class="m-3 fas fa-history fa-2x"></i></a> <a
+				href="/admin/home"><i class="m-3 fas fa-user-cog  fa-2x"></i></a>
 		</div>
-		
-		<div th:fragment="admin-footer">
-			<table align="center" width="200" height="100">
-				<tr>
-					<td><a href="/">Home</a></td>
-					<td><a href="/control/home">Control</a></td>
-					<td>Rooms</td>
-				</tr>
-			</table>
-		</div>
-		
-	</body>
-	
+	</div>
+
+</body>
+
 </html>

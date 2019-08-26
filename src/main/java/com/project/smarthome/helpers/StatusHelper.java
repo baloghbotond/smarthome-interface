@@ -45,13 +45,31 @@ public class StatusHelper {
 		}
 	}
 	
-	public String displayLivingroomRegulatorStatus() {
+	public int displayRegulatorStatus() {
 		
-		if(statusFields.isRegulatorWorkingFlag() == false) {
-			return "OFF";
+		if(statusFields.isRegulatorWorkingFlag() == false || statusFields.getLivingroomMcuStatus() == 0) {
+			return 0;
 		}
 		else {
-			return "ON";
+			return 1;
+		}
+	}
+	
+	public String displayRegulatorOptimum() {
+		
+		if(statusFields.getMcuStatus("livingroom") == 0) {
+			return "-";
+		} else {
+			return Integer.toString(statusFields.getRegulatorOptimum());
+		}
+	}
+	
+	public String displayRegulatorRange() {
+		
+		if(statusFields.getMcuStatus("livingroom") == 0) {
+			return "-";
+		} else {
+			return Integer.toString(statusFields.getRegulatorRange());
 		}
 	}
 	
@@ -60,14 +78,22 @@ public class StatusHelper {
 		return statusFields.getSampleTime(room);
 	}
 	
-	public int displayTemperature(String room) {
+	public String displayTemperature(String room) {
 		
-		return statusFields.getTemperature(room);
+		if(statusFields.getMcuStatus(room) == 0) {
+			return "-";
+		} else {
+			return Integer.toString(statusFields.getTemperature(room));
+		}
 	}
 	
-	public int displayHumidity(String room) {
+	public String displayHumidity(String room) {
 		
-		return statusFields.getHumidity(room);
+		if(statusFields.getMcuStatus(room) == 0) {
+			return "-";
+		} else {
+			return Integer.toString(statusFields.getHumidity(room));
+		}
 	}
 	
 	public void waitForLightStatus(String room) {
@@ -103,6 +129,20 @@ public class StatusHelper {
 		int countTimeout = 0;
 		int lastValue = statusFields.getSampleTime(room);
 		while(lastValue == statusFields.getSampleTime(room) && countTimeout < 10000) {
+			try {
+				Thread.sleep(1);
+				countTimeout++;
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void waitForNewRegulatorValues() {
+		
+		int countTimeout = 0;
+		boolean lastValue = statusFields.isNewRegulatorValues();
+		while(lastValue == statusFields.isNewRegulatorValues() && countTimeout < 10000) {
 			try {
 				Thread.sleep(1);
 				countTimeout++;

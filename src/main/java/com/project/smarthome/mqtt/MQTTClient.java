@@ -87,8 +87,12 @@ public class MQTTClient {
 		
 		subscribeToTheTopic("home/java/app/check");
 		subscribeToTheTopic("home/livingroom/regulator/status");
+		subscribeToTheTopic("home/livingroom/regulator/optimum/value");
+		subscribeToTheTopic("home/livingroom/regulator/range/value");
 		publishMessage("home/java/app/status", "1");
 		publishMessage("home/livingroom/regulator/check", "1");
+		publishMessage("home/livingroom/regulator/optimum/check", "1");
+		publishMessage("home/livingroom/regulator/range/check", "1");
 		
 		for(String room : listOfRooms) {
 			subscribeToTheTopic("home/" + room + "/lights/status");

@@ -1,63 +1,158 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8" />
-<title>Control</title>
-</head>
-<body>
-	<h1 align="center">
-		<b><u>Control</u></b>
-	</h1>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
+      integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+      integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+      crossorigin="anonymous"
+    />
+    <title>SmartHome</title>
+    <link rel="icon" href="" />
+    <link rel="stylesheet"
+		  th:href="@{/css/style.css}" />
+    <script th:src="@{/js/scripts.js}"></script>
+  </head>
+  <body onload="getActualTime(); getActualDate();">
+  
+    <div th:replace="fragments/menu :: navbar">Nav goes here.</div>
 
-	<br />
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 d-none d-md-block"></div>
+        <div class="header col-md-2 col-7">
+          <i class="icon far fa-clock mr-1"></i>
+          <span id="actualTime" class="value"></span>
+        </div>
+        <div class="header col-md-2 d-none d-md-block">
+          <i class="icon far fa-calendar mr-1"></i>
+          <span id="actualDate" class="value text-right"></span>
+        </div>
+        <div class="sum col-md-2 col-2 px-5">
+          <a href="all"><i class="icon text-right fas fa-power-off"></i></a>
+        </div>
+      </div>
+      <div class="row justify-content-center my-3">
+        <div class="base col-3 col-md-1">
+          <i class="icon fas fa-utensils"></i>
+        </div>
+        <div class="base icon d-none d-md-block col-5">
+          Kitchen
+        </div>
+        <div class="base col-2">
+          <i class="icon fas fa-thermometer-half mr-1"></i>
+          <span class="value"
+            ><span th:text="${kitchenTemperature}">X</span> °C</span
+          >
+        </div>
+        <div class="base col-2">
+          <i class="icon fas fa-tint mr-1"></i>
+          <span class="value"
+            ><span th:text="${kitchenHumidity}">X</span> %</span
+          >
+        </div>
+        <div class="base col-md-2 col-3">
+          <i
+            class="icon far fa-lightbulb mr-1"
+            th:classappend="${kitchenLightStatus} == 1 ? bulbon : icon "
+          ></i>
+          <a href="kitchen"
+            ><i
+              class="icon fas mr-1"
+              th:classappend="${kitchenLightStatus} == 1 ? fa-toggle-on : fa-toggle-off "
+            ></i
+          ></a>
+        </div>
+      </div>
+      <div class="row justify-content-center my-3">
+        <div class="base col-3 col-md-1">
+          <i class="icon fas fa-tv"></i>
+        </div>
+        <div class="base icon d-none d-md-block col-5">
+          Living room
+        </div>
+        <div class="base col-2">
+          <i class="icon fas fa-thermometer-half mr-1"></i>
+          <span class="value"
+            ><span th:text="${livingroomTemperature}">X</span> °C</span
+          >
+        </div>
+        <div class="base col-2">
+          <i class="icon fas fa-tint mr-1"></i>
+          <span class="value"
+            ><span th:text="${livingroomHumidity}">X</span> %</span
+          >
+        </div>
+        <div class="base col-md-2 col-3">
+          <i
+            class="icon far fa-lightbulb mr-1"
+            th:classappend="${livingroomLightStatus} == 1 ? bulbon : icon "
+          ></i>
+          <a href="livingroom"
+            ><i
+              class="icon fas mr-1"
+              th:classappend="${livingroomLightStatus} == 1 ? fa-toggle-on : fa-toggle-off "
+            ></i
+          ></a>
+        </div>
+      </div>
+      <div class="row justify-content-center mt-3">
+        <div class="base col-3 col-md-1">
+          <i class="icon fab fa-twitter"></i>
+        </div>
+        <div class="base icon d-none d-md-block col-5">
+          Outside
+        </div>
+        <div class="base col-2">
+          <i class="icon fas fa-thermometer-half mr-1"></i>
+          <span class="value"
+            ><span th:text="${outsideTemperature}">X</span> °C</span
+          >
+        </div>
+        <div class="base col-2">
+          <i class="icon fas fa-tint mr-1"></i>
+          <span class="value"
+            ><span th:text="${outsideHumidity}">X</span> %</span
+          >
+        </div>
+        <div class="base col-md-2 col-3">
+          <i
+            class="icon far fa-lightbulb mr-1"
+            th:classappend="${outsideLightStatus} == 1 ? bulbon : icon "
+          ></i>
+          <a href="outside"
+            ><i
+              class="icon fa-toggle-off fas mr-1"
+              th:classappend="${outsideLightStatus} == 1 ? fa-toggle-on : fa-toggle-off "
+            ></i
+          ></a>
+        </div>
+      </div>
+    </div>
 
-	<table align="center" width="800" height="200">
-		<tr>
-			<th></th>
-			<th><b>Light status</b></th>
-			<th><b>Light switch</b></th>
-			<th><b>Temperature</b></th>
-			<th><b>Humidity</b></th>
-		</tr>
-
-		<tr align="center">
-			<td><b>Living room</b></td>
-			<td th:text="${livingroomLightStatus}">lightStatus</td>
-			<td><a href="livingroom">ON/OFF</a></td>
-			<td><span th:text="${livingroomTemperature}">X</span> °C</td>
-			<td><span th:text="${livingroomHumidity}">X</span> %</td>
-		</tr>
-
-		<tr align="center">
-			<td><b>Kitchen</b></td>
-			<td th:text="${kitchenLightStatus}">lightStatus</td>
-			<td><a href="kitchen">ON/OFF</a></td>
-			<td><span th:text="${kitchenTemperature}">X</span> °C</td>
-			<td><span th:text="${kitchenHumidity}">X</span> %</td>
-		</tr>
-
-		<tr align="center">
-			<td><b>Outside</b></td>
-			<td th:text="${outsideLightStatus}">lightStatus</td>
-			<td><a href="outside">ON/OFF</a></td>
-			<td><span th:text="${outsideTemperature}">X</span> °C</td>
-			<td><span th:text="${outsideHumidity}">X</span> %</td>
-		</tr>
-	</table>
-
-	<br />
-
-	<table align="center" width="200" height="100">
-		<tr>
-			<td><b>ALL OFF</b></td>
-			<td><a href="all">OFF</a></td>
-		</tr>
-	</table>
-	
-	<hr/>
-	
-	<p align="center">Living room humidity regulator: <span th:text="${livingroomRegulator}">X</span></p>
-
-	<div th:replace="fragments/menu :: control-footer">Footer goes here.</div>
-</body>
+    <script
+      src="http://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+      integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
+      integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>

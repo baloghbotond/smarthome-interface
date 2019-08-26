@@ -26,8 +26,29 @@ public class StatusFields {
 	private int actualOutsideHum;
 	
 	private boolean regulatorWorkingFlag;
+	private int regulatorOptimum;
+	private int regulatorRange;
+	private boolean newRegulatorValues;
 	
 	
+	public boolean isNewRegulatorValues() {
+		return newRegulatorValues;
+	}
+	public void setNewRegulatorValues(boolean newRegulatorValues) {
+		this.newRegulatorValues = newRegulatorValues;
+	}
+	public int getRegulatorOptimum() {
+		return regulatorOptimum;
+	}
+	public void setRegulatorOptimum(int regulatorOptimum) {
+		this.regulatorOptimum = regulatorOptimum;
+	}
+	public int getRegulatorRange() {
+		return regulatorRange;
+	}
+	public void setRegulatorRange(int regulatorRange) {
+		this.regulatorRange = regulatorRange;
+	}
 	public boolean isRegulatorWorkingFlag() {
 		return regulatorWorkingFlag;
 	}

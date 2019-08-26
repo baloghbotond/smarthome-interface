@@ -1,0 +1,40 @@
+
+#picture {
+  font-size: 40px;
+  text-align: center;
+}
+
+#title {
+  font-size: 250%;
+  font-weight: bold;
+  color: #f0f0f0;
+}
+
+#onoff {
+  font-size: 150%;
+  font-weight: bold;
+}
+
+.subtitle {
+  font-size: 150%;
+  font-weight: bold;
+}
+
+#set {
+  background-color: #43597a;
+  border-color: #007bff;
+}
+
+.icon-color {
+  color: #c0c0c0;
+}
+
+.progress_bar {
+  width: 0%;
+  -moz-transition: all 4s ease;
+  -moz-transition-delay: 1s;
+  -webkit-transition: all 4s ease;
+  -webkit-transition-delay: 1s;
+  transition: all 2s ease;
+  transition-delay: 1s;
+}
