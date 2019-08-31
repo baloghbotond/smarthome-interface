@@ -9,6 +9,10 @@ body {
   color: #c0c0c0;
 }
 
+#navigation a:visited {
+	color: #c0c0c0;
+}
+
 #navigation a:hover {
   color: #f0f0f0;
 }

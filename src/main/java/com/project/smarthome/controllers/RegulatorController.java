@@ -3,11 +3,9 @@ package com.project.smarthome.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.project.smarthome.helpers.StatusFields;
 import com.project.smarthome.helpers.StatusHelper;
 import com.project.smarthome.mqtt.MQTTClient;
 
@@ -16,13 +14,11 @@ import com.project.smarthome.mqtt.MQTTClient;
 public class RegulatorController {
 
 	private MQTTClient mqttClient;
-	private StatusFields statusFields;
 	private StatusHelper statusHelper;
 
 	@Autowired
-	public RegulatorController(MQTTClient mqttClient, StatusFields statusFields, StatusHelper statusHelper) {
+	public RegulatorController(MQTTClient mqttClient, StatusHelper statusHelper) {
 		this.mqttClient = mqttClient;
-		this.statusFields = statusFields;
 		this.statusHelper = statusHelper;
 	}
 	
@@ -35,16 +31,20 @@ public class RegulatorController {
 	}
 	
 	@RequestMapping("/set_optimum")
-	public String setOptimum(@RequestParam(name = "optimum") int optimum, Model model) {
+	public String setOptimum(@RequestParam(name = "optimum") String optimum, Model model) {
+
+		mqttClient.publishMessage("home/livingroom/regulator/optimum/set", optimum);
+		// delay for the javascript to submit the range
+		statusHelper.waiting(1000);
 		
-		mqttClient.publishMessage("home/livingroom/regulator/optimum/set", Integer.toString(optimum));
+		settingTheAttributes(model);
 		return "regulator";
 	}
 	
 	@RequestMapping("/set_range")
-	public String setRange(@RequestParam(name = "range") int range, Model model) {
+	public String setRange(@RequestParam(name = "range") String range, Model model) {
 		
-		mqttClient.publishMessage("home/livingroom/regulator/range/set", Integer.toString(range));
+		mqttClient.publishMessage("home/livingroom/regulator/range/set", range);
 		statusHelper.waitForNewRegulatorValues();
 		
 		settingTheAttributes(model);

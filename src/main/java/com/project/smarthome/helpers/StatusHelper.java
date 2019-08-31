@@ -101,12 +101,8 @@ public class StatusHelper {
 		int countTimeout = 0;
 		int lastStatus = statusFields.getLightStatus(room);
 		while(lastStatus == statusFields.getLightStatus(room) && countTimeout < 10000) {
-			try {
-				Thread.sleep(1);
-				countTimeout++;
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+			waiting(1);
+			countTimeout++;
 		}
 	}
 	
@@ -115,12 +111,8 @@ public class StatusHelper {
 		int countTimeout = 0;
 		int lastStatus = statusFields.getMcuStatus(room);
 		while(lastStatus == statusFields.getMcuStatus(room)  && countTimeout < 10000) {
-			try {
-				Thread.sleep(1);
-				countTimeout++;
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+			waiting(1);
+			countTimeout++;
 		}
 	}
 	
@@ -129,12 +121,8 @@ public class StatusHelper {
 		int countTimeout = 0;
 		int lastValue = statusFields.getSampleTime(room);
 		while(lastValue == statusFields.getSampleTime(room) && countTimeout < 10000) {
-			try {
-				Thread.sleep(1);
-				countTimeout++;
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+			waiting(1);
+			countTimeout++;
 		}
 	}
 	
@@ -143,12 +131,8 @@ public class StatusHelper {
 		int countTimeout = 0;
 		boolean lastValue = statusFields.isNewRegulatorValues();
 		while(lastValue == statusFields.isNewRegulatorValues() && countTimeout < 10000) {
-			try {
-				Thread.sleep(1);
-				countTimeout++;
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+			waiting(1);
+			countTimeout++;
 		}
 	}
 	
@@ -179,6 +163,14 @@ public class StatusHelper {
 			outsideService.save(new Outside(temperature, humidity, dateOfReceiving));
 			statusFields.setActualOutsideTemp(temperature);
 			statusFields.setActualOutsideHum(humidity);
+		}
+	}
+	
+	public void waiting(long millisec) {
+		try {
+			Thread.sleep(millisec);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
 	}
 }
