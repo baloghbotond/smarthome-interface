@@ -3,6 +3,7 @@ package com.project.smarthome.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -25,7 +26,7 @@ public class ControlController {
 		this.statusHelper = statusHelper;
 	}
 
-	@RequestMapping("/home")
+	@GetMapping("/home")
 	public String home(Model model) {
 
 		settingTheAttributes(model);
@@ -33,7 +34,7 @@ public class ControlController {
 		return "control";
 	}
 
-	@RequestMapping("/{room}")
+	@GetMapping("/{room}")
 	public String lights(@PathVariable("room") String room, Model model) {
 
 		if (statusFields.getLightStatus(room) == 0) {
@@ -51,7 +52,7 @@ public class ControlController {
 		return "control";
 	}
 
-	@RequestMapping("/all")
+	@GetMapping("/all")
 	public String everywhereOff(Model model) {
 
 		mqttClient.publishMessage("home/everywhere/lights", "0");

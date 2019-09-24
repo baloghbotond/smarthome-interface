@@ -19,8 +19,11 @@ public class MQTTClient {
 	@Value("${mqtt.broker.url}")
     private String brokerUrl;
 	
-	@Value("${mqtt.client.id}")
-    private String clientId;
+	@Value("${mqtt.client.username}")
+    private String clientUsername;
+	
+	@Value("${mqtt.client.password}")
+	private String clientPassword;
 	
 	@Value("${mqtt.rooms}")
 	private String allRooms;
@@ -35,13 +38,18 @@ public class MQTTClient {
 	public void establishMqttConnection() {
 		
     	try {
-			mqttClient = new MqttClient(brokerUrl, clientId);
+			mqttClient = new MqttClient(brokerUrl, clientUsername);
 			connectionOptions = new MqttConnectOptions();
 			connectionOptions.setCleanSession(true);
 			connectionOptions.setAutomaticReconnect(true);
+			connectionOptions.setUserName(clientUsername);
+			connectionOptions.setPassword(passwordToCharArray(clientPassword));
+			
+			byte[] payload = {'1'};
+			connectionOptions.setWill("home/everywhere/mcu/off", payload, 2, false);
 			
 			mqttClient.setCallback(mqttCallback);
-			mqttClient.connect();
+			mqttClient.connect(connectionOptions);
 			
 			System.out.println("Connected: " + mqttClient.isConnected());
 			
@@ -101,10 +109,17 @@ public class MQTTClient {
 			subscribeToTheTopic("home/" + room + "/humidity/value");
 			subscribeToTheTopic("home/" + room + "/time/sync/req");
 			subscribeToTheTopic("home/" + room + "/object");
+			publishMessage("home/" + room + "/mcu/on", "1");
 			publishMessage("home/" + room + "/temperature/check", "1");
 			publishMessage("home/" + room + "/lights/check", "1");
 			publishMessage("home/" + room + "/mcu/check", "1");
 			publishMessage("home/" + room + "/humidity/check", "1");
 		}
+	}
+	
+	private char[] passwordToCharArray(String password) {
+		
+		char[] passwordArray = password.toCharArray();
+		return passwordArray;
 	}
 }

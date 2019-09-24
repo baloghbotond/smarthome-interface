@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import com.project.smarthome.entities.Kitchen;
 import com.project.smarthome.entities.Livingroom;
 import com.project.smarthome.entities.Outside;
+import com.project.smarthome.security.RotEncryption;
 import com.project.smarthome.services.KitchenService;
 import com.project.smarthome.services.LivingroomService;
 import com.project.smarthome.services.OutsideService;
@@ -20,14 +21,16 @@ public class StatusHelper {
 	private LivingroomService livingroomService;
 	private OutsideService outsideService;
 	private StatusFields statusFields;
+	private RotEncryption rotEncryption;
 	
 	@Autowired
 	public StatusHelper(KitchenService kitchenService, LivingroomService livingroomService,
-			OutsideService outsideService, StatusFields statusFields) {
+			OutsideService outsideService, StatusFields statusFields, RotEncryption rotEncryption) {
 		this.kitchenService = kitchenService;
 		this.livingroomService = livingroomService;
 		this.outsideService = outsideService;
 		this.statusFields = statusFields;
+		this.rotEncryption = rotEncryption;
 	}
 	
 	public int displayLightStatus(String room) {
@@ -144,8 +147,8 @@ public class StatusHelper {
 		String room = strTokForTheTopic.nextToken();
 		
 		StringTokenizer strTokForTheMessage = new StringTokenizer(message, ";");
-		int temperature = Integer.parseInt(strTokForTheMessage.nextToken());
-		int humidity = Integer.parseInt(strTokForTheMessage.nextToken());
+		int temperature = Integer.parseInt(rotEncryption.decryption(strTokForTheMessage.nextToken()));
+		int humidity = Integer.parseInt(rotEncryption.decryption(strTokForTheMessage.nextToken()));
 		
 		if(room.equals("kitchen")) {
 			kitchenService.save(new Kitchen(temperature, humidity, dateOfReceiving));
@@ -172,5 +175,10 @@ public class StatusHelper {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public int decryptValue(String message) {
+		
+		return Integer.parseInt(rotEncryption.decryption(message));
 	}
 }

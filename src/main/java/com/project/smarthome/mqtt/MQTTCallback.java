@@ -35,123 +35,125 @@ public class MQTTCallback implements MqttCallback {
 	@Override
 	public void messageArrived(String topic, MqttMessage message) throws Exception {
 
+		String messageString = message.toString();
+		
 		if (topic.equals("home/kitchen/lights/status")) {
-			if(message.toString().equals("0")) {
+			if(messageString.equals("0")) {
 				statusFields.setKitchenLightStatus(0);
 			}
-			else if(message.toString().equals("1")) {
+			else if(messageString.equals("1")) {
 				statusFields.setKitchenLightStatus(1);
 			}
 		}
 
-		if (topic.equals("home/livingroom/lights/status")) {
-			if(message.toString().equals("0")) {
+		else if (topic.equals("home/livingroom/lights/status")) {
+			if(messageString.equals("0")) {
 				statusFields.setLivingroomLightStatus(0);
 			}
-			else if(message.toString().equals("1")) {
+			else if(messageString.equals("1")) {
 				statusFields.setLivingroomLightStatus(1);
 			}
 		}
 
-		if (topic.equals("home/outside/lights/status")) {
-			if(message.toString().equals("0")) {
+		else if (topic.equals("home/outside/lights/status")) {
+			if(messageString.equals("0")) {
 				statusFields.setOutsideLightStatus(0);
 			}
-			else if(message.toString().equals("1")) {
+			else if(messageString.equals("1")) {
 				statusFields.setOutsideLightStatus(1);
 			}
 		}
 
-		if (topic.equals("home/kitchen/mcu/status")) {
-			if(message.toString().equals("0")) {
+		else if (topic.equals("home/kitchen/mcu/status")) {
+			if(messageString.equals("0")) {
 				statusFields.setKitchenMcuStatus(0);
 			}
-			else if(message.toString().equals("1")) {
+			else if(messageString.equals("1")) {
 				statusFields.setKitchenMcuStatus(1);
 			}
 		}
 
-		if (topic.equals("home/livingroom/mcu/status")) {
-			if(message.toString().equals("0")) {
+		else if (topic.equals("home/livingroom/mcu/status")) {
+			if(messageString.equals("0")) {
 				statusFields.setLivingroomMcuStatus(0);
 			}
-			else if(message.toString().equals("1")) {
+			else if(messageString.equals("1")) {
 				statusFields.setLivingroomMcuStatus(1);
 			}
 		}
 
-		if (topic.equals("home/outside/mcu/status")) {
-			if(message.toString().equals("0")) {
+		else if (topic.equals("home/outside/mcu/status")) {
+			if(messageString.equals("0")) {
 				statusFields.setOutsideMcuStatus(0);
 			}
-			else if(message.toString().equals("1")) {
+			else if(messageString.equals("1")) {
 				statusFields.setOutsideMcuStatus(1);
 			}
 		}
 
-		if (topic.equals("home/kitchen/temperature/value")) {
-			statusFields.setActualKitchenTemp(Integer.parseInt(message.toString()));
+		else if (topic.equals("home/kitchen/temperature/value")) {
+			statusFields.setActualKitchenTemp(statusHelper.decryptValue(messageString));
 		}
 
-		if (topic.equals("home/livingroom/temperature/value")) {
-			statusFields.setActualLivingroomTemp(Integer.parseInt(message.toString()));
+		else if (topic.equals("home/livingroom/temperature/value")) {
+			statusFields.setActualLivingroomTemp(statusHelper.decryptValue(messageString));
 		}
 
-		if (topic.equals("home/outside/temperature/value")) {
-			statusFields.setActualOutsideTemp(Integer.parseInt(message.toString()));
+		else if (topic.equals("home/outside/temperature/value")) {
+			statusFields.setActualOutsideTemp(statusHelper.decryptValue(messageString));
 		}
 
-		if (topic.equals("home/livingroom/humidity/value")) {
-			statusFields.setActualLivingroomHum(Integer.parseInt(message.toString()));
+		else if (topic.equals("home/livingroom/humidity/value")) {
+			statusFields.setActualLivingroomHum(statusHelper.decryptValue(messageString));
 		}
 
-		if (topic.equals("home/kitchen/humidity/value")) {
-			statusFields.setActualKitchenHum(Integer.parseInt(message.toString()));
+		else if (topic.equals("home/kitchen/humidity/value")) {
+			statusFields.setActualKitchenHum(statusHelper.decryptValue(messageString));
 		}
 
-		if (topic.equals("home/outside/humidity/value")) {
-			statusFields.setActualOutsideHum(Integer.parseInt(message.toString()));
+		else if (topic.equals("home/outside/humidity/value")) {
+			statusFields.setActualOutsideHum(statusHelper.decryptValue(messageString));
 		}
 
-		if (topic.equals("home/java/app/check")) {
+		else if (topic.equals("home/java/app/check")) {
 			mqttClient.publishMessage("home/java/app/status", "1");
 		}
 
-		if (topic.equals("home/livingroom/time/sync/req")) {
+		else if (topic.equals("home/livingroom/time/sync/req")) {
 			String syncTime = Integer.toString(mcuTimeSync.getSyncTime());
 			mqttClient.publishMessage("home/livingroom/time/sync/value", syncTime);
 		}
 
-		if (topic.equals("home/kitchen/time/sync/req")) {
+		else if (topic.equals("home/kitchen/time/sync/req")) {
 			String syncTime = Integer.toString(mcuTimeSync.getSyncTime());
 			mqttClient.publishMessage("home/kitchen/time/sync/value", syncTime);
 		}
 
-		if (topic.equals("home/outside/time/sync/req")) {
+		else if (topic.equals("home/outside/time/sync/req")) {
 			String syncTime = Integer.toString(mcuTimeSync.getSyncTime());
 			mqttClient.publishMessage("home/outside/time/sync/value", syncTime);
 		}
 
-		if (topic.equals("home/livingroom/object") || topic.equals("home/kitchen/object")
+		else if (topic.equals("home/livingroom/object") || topic.equals("home/kitchen/object")
 				|| topic.equals("home/outside/object")) {
-			statusHelper.tempHumMapper(topic, message.toString());
+			statusHelper.tempHumMapper(topic, messageString);
 		}
 		
-		if(topic.equals("home/livingroom/regulator/status")) {
-			if(message.toString().equals("0")) {
+		else if(topic.equals("home/livingroom/regulator/status")) {
+			if(messageString.equals("0")) {
 				statusFields.setRegulatorWorkingFlag(false);
 			}
-			else if(message.toString().equals("1")) {
+			else if(messageString.equals("1")) {
 				statusFields.setRegulatorWorkingFlag(true);
 			}
 		}
 		
-		if(topic.equals("home/livingroom/regulator/optimum/value")) {
-			statusFields.setRegulatorOptimum(Integer.parseInt(message.toString()));
+		else if(topic.equals("home/livingroom/regulator/optimum/value")) {
+			statusFields.setRegulatorOptimum(statusHelper.decryptValue(messageString));
 		}
 		
-		if(topic.equals("home/livingroom/regulator/range/value")) {
-			statusFields.setRegulatorRange(Integer.parseInt(message.toString()));
+		else if(topic.equals("home/livingroom/regulator/range/value")) {
+			statusFields.setRegulatorRange(statusHelper.decryptValue(messageString));
 			statusFields.setNewRegulatorValues(!statusFields.isNewRegulatorValues());
 		}
 	}
