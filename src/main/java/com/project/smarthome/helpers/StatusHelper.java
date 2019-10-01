@@ -76,11 +76,6 @@ public class StatusHelper {
 		}
 	}
 	
-	public int displayMcuTs(String room) {
-		
-		return statusFields.getSampleTime(room);
-	}
-	
 	public String displayTemperature(String room) {
 		
 		if(statusFields.getMcuStatus(room) == 0) {
@@ -114,16 +109,6 @@ public class StatusHelper {
 		int countTimeout = 0;
 		int lastStatus = statusFields.getMcuStatus(room);
 		while(lastStatus == statusFields.getMcuStatus(room)  && countTimeout < 10000) {
-			waiting(1);
-			countTimeout++;
-		}
-	}
-	
-	public void waitForTsValue(String room) {
-		
-		int countTimeout = 0;
-		int lastValue = statusFields.getSampleTime(room);
-		while(lastValue == statusFields.getSampleTime(room) && countTimeout < 10000) {
 			waiting(1);
 			countTimeout++;
 		}

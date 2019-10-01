@@ -13,10 +13,6 @@ public class StatusFields {
 	private int kitchenMcuStatus;
 	private int outsideMcuStatus;
 	
-	private int livingroomTs;
-	private int kitchenTs;
-	private int outsideTs;
-	
 	private int actualLivingroomTemp;
 	private int actualKitchenTemp;
 	private int actualOutsideTemp;
@@ -127,24 +123,6 @@ public class StatusFields {
 	public void setOutsideMcuStatus(int outsideMcuStatus) {
 		this.outsideMcuStatus = outsideMcuStatus;
 	}
-	public int getLivingroomTs() {
-		return livingroomTs;
-	}
-	public void setLivingroomTs(int livingroomTs) {
-		this.livingroomTs = livingroomTs;
-	}
-	public int getKitchenTs() {
-		return kitchenTs;
-	}
-	public void setKitchenTs(int kitchenTs) {
-		this.kitchenTs = kitchenTs;
-	}
-	public int getOutsideTs() {
-		return outsideTs;
-	}
-	public void setOutsideTs(int outsideTs) {
-		this.outsideTs = outsideTs;
-	}
 	
 	public int getLightStatus(String room) {
 		
@@ -173,21 +151,6 @@ public class StatusFields {
 		
 		else {
 			return outsideMcuStatus;
-		}
-	}
-	
-	public int getSampleTime(String mcu) {
-		
-		if(mcu.equals("livingroom")) {
-			return livingroomTs;
-		}
-		
-		else if(mcu.equals("kitchen")) {
-			return kitchenTs;
-		}
-		
-		else {
-			return outsideTs;
 		}
 	}
 	
