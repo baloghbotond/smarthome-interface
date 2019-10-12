@@ -72,6 +72,16 @@ public class MQTTClient {
 		}
 	}
 	
+	public void publishMessageWithQos(String topic, String message, int qos) {
+		
+		try {
+			byte[] payload = message.getBytes();
+			mqttClient.publish(topic, payload, qos, false);
+		} catch (MqttException e) {
+			System.out.println("The message cannot be published in topic: " + topic);
+		}
+	}
+	
 	public void subscribeToTheTopic(String topic) {
 		
 		try {

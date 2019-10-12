@@ -38,30 +38,6 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="text-center">
-            <th scope="row">Living room</th>
-            <td th:text="${livingroomLightStatus}">lightStatus</td>
-            <td>
-              <a
-                href="livingroom"
-                id="livingroom-light-btn"
-                class="btn btn-primary btn-sm"
-                >ON/OFF</a
-              >
-            </td>
-            <td><span th:text="${livingroomTemperature}">X</span> °C</td>
-            <td><span th:text="${livingroomHumidity}">X</span> %</td>
-            <td>|</td>
-            <td th:text="${livingroomMcuStatus}">mcuStatus</td>
-            <td>
-              <a
-                href="mcu_livingroom"
-                id="livingroom-mcu-btn"
-                class="btn btn-danger btn-sm"
-                >ON/OFF</a
-              >
-            </td>
-          </tr>
 
           <tr class="text-center">
             <th scope="row">Kitchen</th>
@@ -82,6 +58,31 @@
               <a
                 href="mcu_kitchen"
                 id="kitchen-mcu-btn"
+                class="btn btn-danger btn-sm"
+                >ON/OFF</a
+              >
+            </td>
+          </tr>
+          
+          <tr class="text-center">
+            <th scope="row">Living room</th>
+            <td th:text="${livingroomLightStatus}">lightStatus</td>
+            <td>
+              <a
+                href="livingroom"
+                id="livingroom-light-btn"
+                class="btn btn-primary btn-sm"
+                >ON/OFF</a
+              >
+            </td>
+            <td><span th:text="${livingroomTemperature}">X</span> °C</td>
+            <td><span th:text="${livingroomHumidity}">X</span> %</td>
+            <td>|</td>
+            <td th:text="${livingroomMcuStatus}">mcuStatus</td>
+            <td>
+              <a
+                href="mcu_livingroom"
+                id="livingroom-mcu-btn"
                 class="btn btn-danger btn-sm"
                 >ON/OFF</a
               >

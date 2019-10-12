@@ -121,17 +121,17 @@ public class MQTTCallback implements MqttCallback {
 
 		else if (topic.equals("home/livingroom/time/sync/req")) {
 			String syncTime = Integer.toString(mcuTimeSync.getSyncTime());
-			mqttClient.publishMessage("home/livingroom/time/sync/value", syncTime);
+			mqttClient.publishMessageWithQos("home/livingroom/time/sync/value", syncTime, 2);
 		}
 
 		else if (topic.equals("home/kitchen/time/sync/req")) {
 			String syncTime = Integer.toString(mcuTimeSync.getSyncTime());
-			mqttClient.publishMessage("home/kitchen/time/sync/value", syncTime);
+			mqttClient.publishMessageWithQos("home/kitchen/time/sync/value", syncTime, 2);
 		}
 
 		else if (topic.equals("home/outside/time/sync/req")) {
 			String syncTime = Integer.toString(mcuTimeSync.getSyncTime());
-			mqttClient.publishMessage("home/outside/time/sync/value", syncTime);
+			mqttClient.publishMessageWithQos("home/outside/time/sync/value", syncTime, 2);
 		}
 
 		else if (topic.equals("home/livingroom/object") || topic.equals("home/kitchen/object")
